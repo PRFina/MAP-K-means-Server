@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * 
  * @author prf
@@ -162,6 +164,47 @@ class Data {
 		}
 		return tuple;
 	}
+	
+	int[] sampling(int k) {
+		int centroidIndexes[] = new int[k];
+		Random rand = new Random(System.currentTimeMillis());
+		
+		//generate random indexes for centroids 
+		for (int i = 0; i < centroidIndexes.length; i++) {
+			
+			boolean found = false;
+			int c;
+			//check the uniqueness of centroid index
+			do {
+				found = false;
+				c = rand.nextInt(this.getNumberOfExamples());
+				
+				for(int j = 0; j < i; j++) {
+					if(this.compare(centroidIndexes[j]),c) {
+						found = true;
+						break;
+					}
+				}
+			}
+			while(found);
+			centroidIndexes[i] = c;
+		}
+		return centroidIndexes;		
+	}
+	
+	private boolean compare(int i, int j) {
+		Tuple t1 = this.getItemSet(i);
+		Tuple t2 = this.getItemSet(j);
+		boolean isTrue = true;
+		
+		for (int k = 0; k < t1.getLength(); k++) {
+			if( !(t1.get(k).equals(t2.get(k))) ) {
+				isTrue = false;
+				break;
+			}
+		}
+		return isTrue;
+	}
 
 	
 	public String toString(){
@@ -193,7 +236,7 @@ class Data {
 		Data trainingSet=new Data();
 		System.out.println(trainingSet);
 		
-		System.out.println(trainingSet.getItemSet(4));
+		System.out.println(trainingSet.getItemSet(13));
 		
 		
 	}
