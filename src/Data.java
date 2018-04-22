@@ -152,6 +152,16 @@ class Data {
 	Attribute getAttribute(int index){
 		return this.attributeSet[index];
 	}
+	
+	Tuple getItemSet(int index) {
+		Tuple tuple = new Tuple(attributeSet.length); // ASK why code in kmeans2.pdf refer to explanatory set??
+		for (int i = 0; i < attributeSet.length; i++) {
+			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)attributeSet[i], 
+					(String) data[index][i]); //ASK perchè dobbiamo usare discrete attribute quando attribute set è un array di tipo attribute (suo supertipo), il cast eventualmente è giusto??
+			tuple.add(tupleItem, i);
+		}
+		return tuple;
+	}
 
 	
 	public String toString(){
@@ -163,7 +173,7 @@ class Data {
 		//concatenate table data
 		out += "\n";
 		for (int i = 0; i < this.numberOfExamples; i++) {
-			out += (i+1) +": ";
+			out += (i) +": ";
 			for( int j = 0; j < this.getNumberOfAttributes(); j++){
 				if(j == this.getNumberOfAttributes()-1)
 					out += this.getAttributeValue(i,j);
@@ -182,6 +192,8 @@ class Data {
 	public static void main(String args[]){
 		Data trainingSet=new Data();
 		System.out.println(trainingSet);
+		
+		System.out.println(trainingSet.getItemSet(4));
 		
 		
 	}
