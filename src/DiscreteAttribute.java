@@ -35,5 +35,20 @@ public class DiscreteAttribute extends Attribute {
 	String getValue(int i) {
 		return this.values[i];
 	}
+	
+	int frequency(Data data, ArraySet idList, String v) {
+		//TODO test 
+		int freqCount = 0;
+		int[] idArray = idList.toArray();
+		String sample;
+		
+		for(int i=0; i < idArray.length;i++) {
+			sample = data.getAttributeValue(idArray[i], this.getIndex()).toString();
+			if (sample.equals(v))
+				freqCount++;
+		}
+		return freqCount;
+	}
+	
 
 }
