@@ -1,0 +1,40 @@
+
+abstract class Item {
+
+	private Attribute attribute;
+	private Object value;
+	
+	Item(Attribute attribute, Object value){
+		this.attribute = attribute;
+		this.value = value;
+	}
+
+	Attribute getAttribute() {
+		return attribute;
+	}
+
+    void setAttribute(Attribute attribute) {
+		this.attribute = attribute;
+	}
+
+	Object getValue() {
+		return value;
+	}
+
+	void setValue(Object value) {
+		this.value = value;
+	}
+
+	@Override
+	public String toString() {
+		return value.toString();
+	}
+	
+	abstract double distance(Object a);
+	
+	void update(Data data, ArraySet clusteredData) {
+		//TODO vedi specifiche
+	}
+	
+	
+}
