@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -164,7 +167,11 @@ class Data {
 		}
 		return tuple;
 	}
-	
+	/**
+	 * Generate array of k unique random indexes for centroids
+	 * @param k
+	 * @return array of indexes
+	 */
 	int[] sampling(int k) {
 		int centroidIndexes[] = new int[k];
 		Random rand = new Random(System.currentTimeMillis());
@@ -191,7 +198,12 @@ class Data {
 		}
 		return centroidIndexes;		
 	}
-	
+	/**
+	 * element wise tuple comparison. Given 2 index i,j check if tuple at index i and tuple at index j are equals. 
+	 * @param i
+	 * @param j
+	 * @return
+	 */
 	private boolean compare(int i, int j) {
 		boolean isTrue = true;
 		
@@ -227,6 +239,19 @@ class Data {
 		return out;
 		
 	}
+	
+	Object computePrototype(ArraySet idList, Attribute attribute) {
+		return computePrototype(idList, (DiscreteAttribute)attribute);
+	}
+	
+	String computePrototype(ArraySet idList, DiscreteAttribute attribute) {
+		List<Integer> valuesFrequencies = new ArrayList<Integer> (attribute.getNumberOfDistinctValues());
+		for (int i = 0; i < attribute.getNumberOfDistinctValues(); i++) {
+			valuesFrequencies.add(attribute.frequency(this, idList, attribute.getValue(i)));
+		}
+		int max=Collections.max(valuesFrequencies);
+		return attribute.getValue(valuesFrequencies.indexOf(max));
+	}
 
 
 	
@@ -250,14 +275,15 @@ class Data {
 		as.add(12);
 		as.add(13);
 			
-		String[] s = {"sunny","overcast","rain"};
+		String[] s = {"hot","mild","cool"};
 		
-		DiscreteAttribute da = new DiscreteAttribute("Outlook", 0,s );
+		DiscreteAttribute da = new DiscreteAttribute("Temperature", 1, s);
 		
-		System.out.println(da.frequency(trainingSet, as, "sunny"));
+		//System.out.println(da.frequency(trainingSet, as, "sunny"));
 		
 		//System.out.println(trainingSet.getItemSet(13));
 		
+		System.out.println(trainingSet.computePrototype(as, da));
 		
 	}
 
