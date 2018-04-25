@@ -9,7 +9,7 @@ import java.util.Random;
 class Data {
 	Object data [][];
 	int numberOfExamples;
-	Attribute attributeSet[];
+	Attribute explanatorySet[];
 	
 	
 	Data(){
@@ -21,34 +21,34 @@ class Data {
 		 
 		
 		//explanatory Set
-		this.attributeSet = new Attribute[5];
+		this.explanatorySet = new Attribute[5];
 		
 		String outLookValues[]=new String[3];
 		outLookValues[0]="overcast";
 		outLookValues[1]="rain";
 		outLookValues[2]="sunny";
-		attributeSet[0] = new DiscreteAttribute("Outlook",0, outLookValues);
+		explanatorySet[0] = new DiscreteAttribute("Outlook",0, outLookValues);
 		
 		String temperatureValues[]=new String[3];
 		outLookValues[0]="hot";
 		outLookValues[1]="mild";
 		outLookValues[2]="cool";
-		attributeSet[1] = new DiscreteAttribute("Temperature",1, temperatureValues);
+		explanatorySet[1] = new DiscreteAttribute("Temperature",1, temperatureValues);
 		
 		String humidityValues[]=new String[2];
 		humidityValues[0]="high";
 		humidityValues[1]="normal";
-		attributeSet[2] = new DiscreteAttribute("Humidity",2, humidityValues);
+		explanatorySet[2] = new DiscreteAttribute("Humidity",2, humidityValues);
 		
 		String windValues[]=new String[2];
 		windValues[0]="strong";
 		windValues[1]="weak";
-		attributeSet[3] = new DiscreteAttribute("Wind",3, windValues);
+		explanatorySet[3] = new DiscreteAttribute("Wind",3, windValues);
 		
 		String playTennisValues[]=new String[2];
 		playTennisValues[0]="no";
 		playTennisValues[1]="yes";
-		attributeSet[4] = new DiscreteAttribute("PlayTennis",4, playTennisValues);
+		explanatorySet[4] = new DiscreteAttribute("PlayTennis",4, playTennisValues);
 		
 		//Manually fill data table
 		this.data[0][0]="sunny";
@@ -142,7 +142,7 @@ class Data {
 	}
 	
 	int getNumberOfAttributes(){
-		return this.attributeSet.length;
+		return this.explanatorySet.length;
 	}
 	
 	
@@ -152,13 +152,13 @@ class Data {
 	}
 	
 	Attribute getAttribute(int index){
-		return this.attributeSet[index];
+		return this.explanatorySet[index];
 	}
 	
 	Tuple getItemSet(int index) {
-		Tuple tuple = new Tuple(attributeSet.length); // ASK why code in kmeans2.pdf refer to explanatory set??
-		for (int i = 0; i < attributeSet.length; i++) {
-			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)attributeSet[i], 
+		Tuple tuple = new Tuple(explanatorySet.length); // ASK why code in kmeans2.pdf refer to explanatory set??
+		for (int i = 0; i < explanatorySet.length; i++) {
+			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)explanatorySet[i], 
 					(String) data[index][i]); //ASK perchè dobbiamo usare discrete attribute quando attribute set è un array di tipo attribute (suo supertipo), il cast eventualmente è giusto??
 			tuple.add(tupleItem, i);
 		}
@@ -180,7 +180,7 @@ class Data {
 				c = rand.nextInt(this.getNumberOfExamples());
 				
 				for(int j = 0; j < i; j++) {
-					if(this.compare(centroidIndexes[j]),c) {
+					if(this.compare(centroidIndexes[j],c)){
 						found = true;
 						break;
 					}
@@ -193,12 +193,10 @@ class Data {
 	}
 	
 	private boolean compare(int i, int j) {
-		Tuple t1 = this.getItemSet(i);
-		Tuple t2 = this.getItemSet(j);
 		boolean isTrue = true;
 		
-		for (int k = 0; k < t1.getLength(); k++) {
-			if( !(t1.get(k).equals(t2.get(k))) ) {
+		for (int k = 0; k < this.getNumberOfAttributes(); k++) {
+			if( !(this.getAttributeValue(i,k).equals(this.getAttributeValue(j, k))) ) {
 				isTrue = false;
 				break;
 			}
@@ -210,7 +208,7 @@ class Data {
 	public String toString(){
 		String out = "";
 		//concatenate table header
-		for(Attribute attr: attributeSet){
+		for(Attribute attr: explanatorySet){
 			out += attr.getName() + ",";
 		}
 		//concatenate table data
@@ -236,7 +234,29 @@ class Data {
 		Data trainingSet=new Data();
 		System.out.println(trainingSet);
 		
-		System.out.println(trainingSet.getItemSet(13));
+		ArraySet as = new ArraySet();
+		as.add(0);
+		as.add(1);
+		as.add(2);
+		as.add(3);
+		as.add(4);
+		as.add(5);
+		as.add(6);
+		as.add(7);
+		as.add(8);
+		as.add(9);
+		as.add(10);
+		as.add(11);
+		as.add(12);
+		as.add(13);
+			
+		String[] s = {"sunny","overcast","rain"};
+		
+		DiscreteAttribute da = new DiscreteAttribute("Outlook", 0,s );
+		
+		System.out.println(da.frequency(trainingSet, as, "sunny"));
+		
+		//System.out.println(trainingSet.getItemSet(13));
 		
 		
 	}

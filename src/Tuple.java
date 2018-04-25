@@ -21,7 +21,7 @@ class Tuple {
 	}
 	
 	void add(Item c, int i) {
-		if (i < this.getLength())
+		// if (i < this.getLength())
 			tuple[i] = c;
 	}
 	

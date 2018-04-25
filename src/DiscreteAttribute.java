@@ -35,7 +35,13 @@ public class DiscreteAttribute extends Attribute {
 	String getValue(int i) {
 		return this.values[i];
 	}
-	
+	/**
+	 * Get the number of occurrences of v in the Data's row indexed by idList 
+	 * @param data
+	 * @param idList
+	 * @param v
+	 * @return
+	 */
 	int frequency(Data data, ArraySet idList, String v) {
 		//TODO test 
 		int freqCount = 0;
