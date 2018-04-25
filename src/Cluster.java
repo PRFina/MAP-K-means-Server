@@ -31,13 +31,13 @@ public class Cluster {
 		
 	}
 	
-	//verifica se una transazione è clusterizzata nell'array corrente
+	//verifica se una transazione ï¿½ clusterizzata nell'array corrente
 	boolean contain(int id){
 		return clusteredData.get(id);
 	}
 	
 
-	//remove the tuplethat has changed the cluster
+	//remove the tuple that has changed the cluster
 	void removeTuple(int id){
 		clusteredData.delete(id);
 		
@@ -49,7 +49,6 @@ public class Cluster {
 			str+=centroid.get(i);
 		str+=")";
 		return str;
-		
 	}
 	
 
@@ -62,14 +61,12 @@ public class Cluster {
 		int array[]=clusteredData.toArray();
 		for(int i=0;i<array.length;i++){
 			str+="[";
-			for(int j=0;j<data.getNumberOfExplanatoryAttributes();j++)
-				str+=data.getValue(array[i], j)+" ";
+			for(int j=0;j<data.getNumberOfAttributes();j++)
+				str+=data.getAttributeValue(array[i], j)+" ";
 			str+="] dist="+getCentroid().getDistance(data.getItemSet(array[i]))+"\n";
-			
 		}
 		str+="\nAvgDistance="+getCentroid().avgDistance(data, array);
 		return str;
-		
 	}
 
 }

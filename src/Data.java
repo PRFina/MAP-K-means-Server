@@ -243,7 +243,14 @@ class Data {
 	Object computePrototype(ArraySet idList, Attribute attribute) {
 		return computePrototype(idList, (DiscreteAttribute)attribute);
 	}
-	
+	/**
+	 * Return the most frequent attribute's value in tuples indexed by idList
+	 * 
+	 * @param idList
+	 * @param attribute
+	 * @return
+	 */
+	//TODO: review efficiency of method
 	String computePrototype(ArraySet idList, DiscreteAttribute attribute) {
 		List<Integer> valuesFrequencies = new ArrayList<Integer> (attribute.getNumberOfDistinctValues());
 		for (int i = 0; i < attribute.getNumberOfDistinctValues(); i++) {
@@ -253,7 +260,7 @@ class Data {
 		return attribute.getValue(valuesFrequencies.indexOf(max));
 	}
 
-
+	
 	
 	public static void main(String args[]){
 		Data trainingSet=new Data();

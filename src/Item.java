@@ -33,7 +33,7 @@ abstract class Item {
 	abstract double distance(Object a);
 	
 	void update(Data data, ArraySet clusteredData) {
-		//TODO vedi specifiche
+		this.value=data.computePrototype(clusteredData, this.attribute);
 	}
 	
 	

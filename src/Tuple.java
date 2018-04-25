@@ -34,7 +34,7 @@ class Tuple {
 		return sum;
 	}
 	
-	double getAvgDistance(Data data, int clusteredData[]) {
+	double avgDistance(Data data, int clusteredData[]) {
 		double sum = 0.0, avg = 0.0;
 		for (int i = 0; i < clusteredData.length; i++) {
 			sum += this.getDistance(data.getItemSet(clusteredData[i]));
