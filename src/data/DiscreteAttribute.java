@@ -1,4 +1,7 @@
+package data;
 import java.util.Arrays;
+
+import utility.ArraySet;
 /**
  * This class provide an implementation of a discrete attribute type, categorical data like blood type, music genres, days of the week.
  * @author Pio Raffaele Fina

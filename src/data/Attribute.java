@@ -1,3 +1,4 @@
+package data;
 /**
  * This class represent the base structure for an attribute object, since the class is abstract it can't be instantiated.
  * 

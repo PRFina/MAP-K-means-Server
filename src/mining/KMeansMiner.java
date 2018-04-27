@@ -1,3 +1,5 @@
+package mining;
+import data.Data;
 
 class KMeansMiner {
 

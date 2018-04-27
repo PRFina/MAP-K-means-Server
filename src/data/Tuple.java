@@ -1,9 +1,11 @@
+package data;
+
 /**
  * 
  * @author Pio Raffaele Fina
  *
  */
-class Tuple {
+public class Tuple {
 	
 	private Item[] tuple;
 	
@@ -12,11 +14,11 @@ class Tuple {
 		tuple = new Item[size];
 	}
 	
-	int getLength() {
+	public int getLength() {
 		return tuple.length;
 	}
 	
-	Item get(int i) {
+	public Item get(int i) {
 		return tuple[i];
 	}
 	
@@ -25,7 +27,7 @@ class Tuple {
 			tuple[i] = c;
 	}
 	
-	double getDistance(Tuple obj) {
+	public double getDistance(Tuple obj) {
 		double sum = 0.0;
 		for (int i = 0; i < tuple.length; i++) {
 			sum += tuple[i].distance(obj.get(i));
@@ -34,7 +36,7 @@ class Tuple {
 		return sum;
 	}
 	
-	double avgDistance(Data data, int clusteredData[]) {
+	public double avgDistance(Data data, int clusteredData[]) {
 		double sum = 0.0, avg = 0.0;
 		for (int i = 0; i < clusteredData.length; i++) {
 			sum += this.getDistance(data.getItemSet(clusteredData[i]));

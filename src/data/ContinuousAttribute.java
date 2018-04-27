@@ -1,3 +1,4 @@
+package data;
 /**
  * This class provide an implementation of a continuous attribute type, eg. weight, length, temperature values.
  * @author Pio Raffaele Fina

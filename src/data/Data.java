@@ -1,7 +1,10 @@
+package data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import utility.ArraySet;
 
 /**
  * 
@@ -9,13 +12,13 @@ import java.util.Random;
  * This class model a tabular view of transactions
  */
 
-class Data {
+public class Data {
 	Object data [][];
 	int numberOfExamples;
 	Attribute explanatorySet[];
 	
 	
-	Data(){
+	public Data(){
 		
 		//data
 		this.data = new Object [14][5];
@@ -140,25 +143,25 @@ class Data {
 		
 	}
 	
-	int getNumberOfExamples(){
+	public int getNumberOfExamples(){
 		return this.numberOfExamples;
 	}
 	
-	int getNumberOfAttributes(){
+	public int getNumberOfAttributes(){
 		return this.explanatorySet.length;
 	}
 	
 	
 	
-	Object getAttributeValue(int exampleIndex, int attributeIndex){
+	public Object getAttributeValue(int exampleIndex, int attributeIndex){
 		return this.data[exampleIndex][attributeIndex];
 	}
 	
-	Attribute getAttribute(int index){
+	public Attribute getAttribute(int index){
 		return this.explanatorySet[index];
 	}
 	
-	Tuple getItemSet(int index) {
+	public Tuple getItemSet(int index) {
 		Tuple tuple = new Tuple(explanatorySet.length); // ASK why code in kmeans2.pdf refer to explanatory set??
 		for (int i = 0; i < explanatorySet.length; i++) {
 			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)explanatorySet[i], 
@@ -172,7 +175,7 @@ class Data {
 	 * @param k
 	 * @return array of indexes
 	 */
-	int[] sampling(int k) {
+	public int[] sampling(int k) {
 		int centroidIndexes[] = new int[k];
 		Random rand = new Random(System.currentTimeMillis());
 		

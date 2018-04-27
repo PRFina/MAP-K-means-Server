@@ -1,5 +1,7 @@
+package data;
+import utility.ArraySet;
 
-abstract class Item {
+public abstract class Item {
 
 	private Attribute attribute;
 	private Object value;
@@ -32,7 +34,7 @@ abstract class Item {
 	
 	abstract double distance(Object a);
 	
-	void update(Data data, ArraySet clusteredData) {
+	public void update(Data data, ArraySet clusteredData) {
 		this.value = data.computePrototype(clusteredData, this.attribute);
 	}
 	
