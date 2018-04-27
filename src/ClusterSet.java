@@ -37,7 +37,7 @@ class ClusterSet {
 		for(int i = 0 ; i < C.length-1 ; i++ ) {
 			double dist1 = tuple.getDistance(C[i].getCentroid());
 			double dist2 = tuple.getDistance(C[i+1].getCentroid());
-			if(dist1 < dist2) {
+			if(dist1 <= dist2) {
 				minCluster = C[i];
 			}
 		}
