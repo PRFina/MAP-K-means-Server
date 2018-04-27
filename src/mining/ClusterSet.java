@@ -2,11 +2,11 @@ package mining;
 import data.Data;
 import data.Tuple;
 
-class ClusterSet {
+public class ClusterSet {
 	private Cluster C[];
 	private int i;
 	
-	ClusterSet(int k){
+	public ClusterSet(int k){
 		C = new Cluster[k];
 		int i = 0;
 	}
