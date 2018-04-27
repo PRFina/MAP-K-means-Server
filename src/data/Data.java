@@ -13,21 +13,19 @@ import utility.ArraySet;
  */
 
 public class Data {
-	Object data [][];
-	int numberOfExamples;
-	Attribute explanatorySet[];
+	private Object data [][];
+	private int numberOfExamples;
+	private Attribute explanatorySet[];
+	private int distinctTuple;
 	
 	
 	public Data(){
 		
-		//data
 		this.data = new Object [14][5];
-		// numberOfExamples
-		this.numberOfExamples=14;		 
-		 
-		
-		//explanatory Set
+		this.numberOfExamples = 14;		 
 		this.explanatorySet = new Attribute[5];
+		this.distinctTuple = countDistinctTuples();
+		
 		
 		String outLookValues[]=new String[3];
 		outLookValues[0]="overcast";
@@ -60,7 +58,7 @@ public class Data {
 		this.data[0][0]="sunny";
 		this.data[0][1]="hot";
 		this.data[0][2]="high";
-		this.data[0][3]="weak";
+		this.data[0][3]="strong";
 		this.data[0][4]="no";
 
 		this.data[1][0]="sunny";
@@ -106,10 +104,10 @@ public class Data {
 		this.data[7][4]="no";
 
 		this.data[8][0]="sunny";
-		this.data[8][1]="cool";
-		this.data[8][2]="normal";
+		this.data[8][1]="mild";
+		this.data[8][2]="high";
 		this.data[8][3]="weak";
-		this.data[8][4]="yes";
+		this.data[8][4]="no";
 
 		this.data[9][0]="rain";
 		this.data[9][1]="mild";
@@ -130,9 +128,9 @@ public class Data {
 		this.data[11][4]="yes";
 
 		this.data[12][0]="overcast";
-		this.data[12][1]="hot";
-		this.data[12][2]="normal";
-		this.data[12][3]="weak";
+		this.data[12][1]="mild";
+		this.data[12][2]="high";
+		this.data[12][3]="strong";
 		this.data[12][4]="yes";
 
 		this.data[13][0]="rain";
@@ -207,6 +205,7 @@ public class Data {
 	 * @param j
 	 * @return
 	 */
+	//TODO testare compare!!! e provare number of distinct tuples
 	private boolean compare(int i, int j) {
 		boolean isTrue = true;
 		
@@ -263,7 +262,14 @@ public class Data {
 		return attribute.getValue(valuesFrequencies.indexOf(max));
 	}
 
-	
+	public int countDistinctTuples() {
+		int counter=1;
+		for (int i = 1; i < data.length; i++) {
+			if(!compare(0,i))
+				counter++;
+		}
+		return counter;
+	}
 	
 	public static void main(String args[]){
 		Data trainingSet=new Data();
@@ -293,7 +299,9 @@ public class Data {
 		
 		//System.out.println(trainingSet.getItemSet(13));
 		
-		System.out.println(trainingSet.computePrototype(as, da));
+		//System.out.println(trainingSet.computePrototype(as, da));
+		
+		System.out.println(trainingSet.countDistinctTuples());
 		
 	}
 
