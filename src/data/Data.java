@@ -1,8 +1,6 @@
 package data;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import utility.ArraySet;
 
@@ -24,8 +22,7 @@ public class Data {
 		this.data = new Object [14][5];
 		this.numberOfExamples = 14;		 
 		this.explanatorySet = new Attribute[5];
-		//this.distinctTuple = countDistinctTuples();
-		
+
 		
 		String outLookValues[]=new String[3];
 		outLookValues[0]="overcast";
@@ -34,9 +31,9 @@ public class Data {
 		explanatorySet[0] = new DiscreteAttribute("Outlook",0, outLookValues);
 		
 		String temperatureValues[]=new String[3];
-		outLookValues[0]="hot";
-		outLookValues[1]="mild";
-		outLookValues[2]="cool";
+		temperatureValues[0]="hot";
+		temperatureValues[1]="mild";
+		temperatureValues[2]="cool";
 		explanatorySet[1] = new DiscreteAttribute("Temperature",1, temperatureValues);
 		
 		String humidityValues[]=new String[2];
@@ -58,7 +55,7 @@ public class Data {
 		this.data[0][0]="sunny";
 		this.data[0][1]="hot";
 		this.data[0][2]="high";
-		this.data[0][3]="strong";
+		this.data[0][3]="weak";
 		this.data[0][4]="no";
 
 		this.data[1][0]="sunny";
@@ -104,10 +101,10 @@ public class Data {
 		this.data[7][4]="no";
 
 		this.data[8][0]="sunny";
-		this.data[8][1]="mild";
-		this.data[8][2]="high";
+		this.data[8][1]="cool";
+		this.data[8][2]="normal";
 		this.data[8][3]="weak";
-		this.data[8][4]="no";
+		this.data[8][4]="yes";
 
 		this.data[9][0]="rain";
 		this.data[9][1]="mild";
@@ -128,9 +125,9 @@ public class Data {
 		this.data[11][4]="yes";
 
 		this.data[12][0]="overcast";
-		this.data[12][1]="mild";
-		this.data[12][2]="high";
-		this.data[12][3]="strong";
+		this.data[12][1]="hot";
+		this.data[12][2]="normal";
+		this.data[12][3]="weak";
 		this.data[12][4]="yes";
 
 		this.data[13][0]="rain";
@@ -138,7 +135,9 @@ public class Data {
 		this.data[13][2]="high";
 		this.data[13][3]="strong";
 		this.data[13][4]="no";
-		
+
+		this.distinctTuple = countDistinctTuples();
+
 	}
 	
 	public int getNumberOfExamples(){
@@ -148,8 +147,6 @@ public class Data {
 	public int getNumberOfAttributes(){
 		return this.explanatorySet.length;
 	}
-	
-	
 	
 	public Object getAttributeValue(int exampleIndex, int attributeIndex){
 		return this.data[exampleIndex][attributeIndex];
@@ -168,6 +165,7 @@ public class Data {
 		}
 		return tuple;
 	}
+
 	/**
 	 * Generate array of k unique random indexes for centroids
 	 * @param k
@@ -199,20 +197,21 @@ public class Data {
 		}
 		return centroidIndexes;		
 	}
+
 	/**
 	 * element wise tuple comparison. Given 2 index i,j check if tuple at index i and tuple at index j are equals. 
 	 * @param i
 	 * @param j
 	 * @return
 	 */
-	//TODO testare compare!!! e provare number of distinct tuples
 	private boolean compare(int i, int j) {
 		boolean isTrue = true;
-		
-		for (int k = 0; k < this.getNumberOfAttributes(); k++) {
-			if( !(this.getAttributeValue(i,k).equals(this.getAttributeValue(j, k))) ) {
-				isTrue = false;
-				break;
+		if(i!=j){
+			for (int k = 0; k < this.getNumberOfAttributes(); k++) {
+				if( !(this.getAttributeValue(i,k).equals(this.getAttributeValue(j, k))) ) {
+					isTrue = false;
+					break;
+				}
 			}
 		}
 		return isTrue;
@@ -254,27 +253,35 @@ public class Data {
 	 */
 	//TODO: review efficiency of method
 	String computePrototype(ArraySet idList, DiscreteAttribute attribute) {
-		List<Integer> valuesFrequencies = new ArrayList<Integer> (attribute.getNumberOfDistinctValues());
-		for (int i = 0; i < attribute.getNumberOfDistinctValues(); i++) {
-			valuesFrequencies.add(attribute.frequency(this, idList, attribute.getValue(i)));
+		int maxIndex=0;
+		for (int i = 0; i < attribute.getNumberOfDistinctValues()-1; i++) {
+			int freq1 =	attribute.frequency(this, idList, attribute.getValue(i));
+			int freq2 =	attribute.frequency(this, idList, attribute.getValue(i+1));
+			if (freq1>=freq2){
+				maxIndex=i;
+			}
+			else
+				maxIndex=i+1;
 		}
-		int max=Collections.max(valuesFrequencies);
-		return attribute.getValue(valuesFrequencies.indexOf(max));
+		return attribute.getValue(maxIndex);
 	}
 
 	public int countDistinctTuples() {
-		int counter=1;
-		for (int i = 1; i < data.length; i++) {
-			if(!compare(0,i))
-				counter++;
+		int counter=0;
+		for (int i = 1; i < this.numberOfExamples-1; i++) {
+			for(int j= i+1; j< this.numberOfExamples; j++){
+				if (this.compare(i,j))
+					counter++;
+			}
 		}
-		return counter;
+		return this.numberOfExamples-counter;
 	}
 	
 	public static void main(String args[]){
 		Data trainingSet=new Data();
 		System.out.println(trainingSet);
-		
+
+
 		ArraySet as = new ArraySet();
 		as.add(0);
 		as.add(1);
@@ -290,19 +297,9 @@ public class Data {
 		as.add(11);
 		as.add(12);
 		as.add(13);
-			
-		String[] s = {"hot","mild","cool"};
-		
-		DiscreteAttribute da = new DiscreteAttribute("Temperature", 1, s);
-		
-		System.out.println(da.frequency(trainingSet, as, "sunny"));
-		
-		//System.out.println(trainingSet.getItemSet(13));
-		
-		//System.out.println(trainingSet.computePrototype(as, da));
-		
-		//System.out.println(trainingSet.countDistinctTuples());
-		
+
+		System.out.println();
+
 	}
 
 }

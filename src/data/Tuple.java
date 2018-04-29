@@ -1,5 +1,7 @@
 package data;
 
+import java.util.Arrays;
+
 /**
  * 
  * @author Pio Raffaele Fina
@@ -51,19 +53,11 @@ public class Tuple {
 		return avg;
 	}
 	
-	public String toString() {
-		String out= "[";
-		
-		for (int i = 0; i < tuple.length; i++) {
-			if( i == tuple.length-1)
-				out += tuple[i];
-			else
-				out += tuple[i] + ",";
-		}
-		out +="]";		
-		return out;
+	public String toString(){
+		return Arrays.toString(tuple);
 	}
 
+/*
 	public static void main(String[] args){
 		Tuple t1 = new Tuple(3);
 		Tuple t2 = new Tuple(3);
@@ -89,10 +83,10 @@ public class Tuple {
 		t2.add(i21,1);
 		t2.add(i22,2);
 
-		System.out.println(t1.getDistance(t2));
+		System.out.println(t1);
 		System.out.println(t2.getDistance(t1));
 
 	}
-
+*/
 
 }

@@ -59,7 +59,7 @@ public class DiscreteAttribute extends Attribute {
 	}
 
 	public String toString(){
-	    return this.getName() +"@"+ this.getIndex() + ": " + Arrays.toString(values);
+	    return this.getName() +" (@ "+ this.getIndex() + ") : " + Arrays.toString(values);
     }
 
 }
