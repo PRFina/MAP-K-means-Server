@@ -51,11 +51,11 @@ import data.Data;
 	
 	public static void main(String[] args) {
 		Data trainingSet=new Data();
-		System.out.println(trainingSet);
-		
-		KMeansMiner kmm = new KMeansMiner(10);
-		
-		System.out.println(kmm.kmeans(trainingSet));
+
+		System.out.println("first");
+		KMeansMiner kmm = new KMeansMiner(12);
+		kmm.kmeans(trainingSet);
+		System.out.println("ok");
 
 	}
 

@@ -3,12 +3,12 @@ import data.Data;
 import data.Tuple;
 
 public class ClusterSet {
-	private Cluster C[];
+	private Cluster[] C;
 	private int i;
 	
 	public ClusterSet(int k){
-		C = new Cluster[k];
-		int i = 0;
+		this.C = new Cluster[k];
+		this.i = 0;
 	}
 	
 	void add(Cluster c) {
@@ -34,7 +34,6 @@ public class ClusterSet {
 	 * @param tuple
 	 * @return
 	 */
-	//confrontare con computeCluster in Data, questo è più leggibile!
 	Cluster nearestCluster(Tuple tuple) {
 		Cluster minCluster = null;
 		for(int i = 0 ; i < C.length-1 ; i++ ) {
@@ -43,6 +42,8 @@ public class ClusterSet {
 			if(dist1 <= dist2) {
 				minCluster = C[i];
 			}
+			else
+				minCluster = C[i+1];
 		}
 		return minCluster;
 	}
@@ -78,10 +79,13 @@ public class ClusterSet {
 		}
 		return out;
 	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+	public static void main(String[] args) {
+		ClusterSet c = new ClusterSet(3);
+
+		Data trainingSet = new Data();
+		Cluster cc= new Cluster(trainingSet.getItemSet(0));
+		c.add(cc);
 	}
 
 }
