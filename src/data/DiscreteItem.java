@@ -7,15 +7,12 @@ public class DiscreteItem extends Item {
 	}
 	
 	double distance(Object a) {
-		double dist = 0.0;
+		double dist = 1.0;
 		
-		if (this.getValue().equals(a))
-			dist = 1.0;
-		
+		if (this.getValue().equals(a)){
+			dist = 0.0;
+		}
+
 		return dist;		
 	}
-	
-	
-	
-
 }

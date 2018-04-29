@@ -24,7 +24,7 @@ public class Data {
 		this.data = new Object [14][5];
 		this.numberOfExamples = 14;		 
 		this.explanatorySet = new Attribute[5];
-		this.distinctTuple = countDistinctTuples();
+		//this.distinctTuple = countDistinctTuples();
 		
 		
 		String outLookValues[]=new String[3];
@@ -295,13 +295,13 @@ public class Data {
 		
 		DiscreteAttribute da = new DiscreteAttribute("Temperature", 1, s);
 		
-		//System.out.println(da.frequency(trainingSet, as, "sunny"));
+		System.out.println(da.frequency(trainingSet, as, "sunny"));
 		
 		//System.out.println(trainingSet.getItemSet(13));
 		
 		//System.out.println(trainingSet.computePrototype(as, da));
 		
-		System.out.println(trainingSet.countDistinctTuples());
+		//System.out.println(trainingSet.countDistinctTuples());
 		
 	}
 

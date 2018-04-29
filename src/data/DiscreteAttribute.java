@@ -21,7 +21,6 @@ public class DiscreteAttribute extends Attribute {
 	DiscreteAttribute(String name, int index, String values[]) {
 		super(name, index);
 		this.values = values;
-		//Arrays.sort(this.values);
 	}
 	/**
 	 * Get the values number that attribute can assume.
@@ -58,6 +57,9 @@ public class DiscreteAttribute extends Attribute {
 		}
 		return freqCount;
 	}
-	
+
+	public String toString(){
+	    return this.getName() +"@"+ this.getIndex() + ": " + Arrays.toString(values);
+    }
 
 }

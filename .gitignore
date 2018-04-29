@@ -77,3 +77,8 @@ local.properties
 #Custom
 .project
 .classpath
+
+#IntelliJ
+.idea/*
+.idea/
+*.iml
