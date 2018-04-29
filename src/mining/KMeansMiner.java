@@ -53,7 +53,7 @@ import data.Data;
 		Data trainingSet=new Data();
 
 		System.out.println("first");
-		KMeansMiner kmm = new KMeansMiner(12);
+		KMeansMiner kmm = new KMeansMiner(3);
 		kmm.kmeans(trainingSet);
 		System.out.println("ok");
 

@@ -35,15 +35,15 @@ public class ClusterSet {
 	 * @return
 	 */
 	Cluster nearestCluster(Tuple tuple) {
-		Cluster minCluster = null;
-		for(int i = 0 ; i < C.length-1 ; i++ ) {
-			double dist1 = tuple.getDistance(C[i].getCentroid());
-			double dist2 = tuple.getDistance(C[i+1].getCentroid());
-			if(dist1 <= dist2) {
+		Cluster minCluster = C[0];
+		for(int i = 1 ; i < C.length ; i++ ) {
+			double dist = tuple.getDistance(C[i].getCentroid());
+			double distMinCluster = tuple.getDistance(minCluster.getCentroid());
+
+			if(dist <= distMinCluster) {
 				minCluster = C[i];
 			}
-			else
-				minCluster = C[i+1];
+
 		}
 		return minCluster;
 	}
@@ -84,8 +84,13 @@ public class ClusterSet {
 		ClusterSet c = new ClusterSet(3);
 
 		Data trainingSet = new Data();
-		Cluster cc= new Cluster(trainingSet.getItemSet(0));
-		c.add(cc);
+
+
+		c.add(new Cluster(trainingSet.getItemSet(6)));
+		c.add(new Cluster(trainingSet.getItemSet(10)));
+		c.add(new Cluster(trainingSet.getItemSet(6)));
+
+		System.out.println(c.nearestCluster(trainingSet.getItemSet(0)));
 	}
 
 }
