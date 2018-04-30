@@ -20,7 +20,7 @@ import data.Data;
 		boolean changedCluster=false;
 		
 		do{
-			System.out.println("\t\tIterazione n:"+numberOfIterations+"\n"+this.getC().toString(data)+"**************************************"); //DEBUG PRINT
+			//System.out.println("\t\tIterazione n:"+numberOfIterations+"\n"+this.getC().toString(data)+"**************************************"); //DEBUG PRINT
 			numberOfIterations++;
 
 			//STEP 2
