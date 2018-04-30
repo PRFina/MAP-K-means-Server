@@ -20,7 +20,9 @@ import data.Data;
 		boolean changedCluster=false;
 		
 		do{
+			System.out.println("\t\tIterazione n:"+numberOfIterations+"\n"+this.getC().toString(data)+"**************************************"); //DEBUG PRINT
 			numberOfIterations++;
+
 			//STEP 2
 			changedCluster=false;
 			for(int i=0;i<data.getNumberOfExamples();i++){
@@ -52,10 +54,9 @@ import data.Data;
 	public static void main(String[] args) {
 		Data trainingSet=new Data();
 
-		System.out.println("first");
 		KMeansMiner kmm = new KMeansMiner(3);
 		kmm.kmeans(trainingSet);
-		System.out.println("ok");
+
 
 	}
 

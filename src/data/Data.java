@@ -348,14 +348,16 @@ public class Data {
 	//TODO: review efficiency of method
 	String computePrototype(ArraySet idList, DiscreteAttribute attribute) {
 		int maxIndex=0;
-		for (int i = 0; i < attribute.getNumberOfDistinctValues()-1; i++) {
-			int freq1 =	attribute.frequency(this, idList, attribute.getValue(i));
-			int freq2 =	attribute.frequency(this, idList, attribute.getValue(i+1));
-			if (freq1>=freq2){
+		int maxFreq = attribute.frequency(this,idList,attribute.getValue(0));
+
+		for (int i = 1; i < attribute.getNumberOfDistinctValues(); i++) {
+			int valFreq =attribute.frequency(this, idList, attribute.getValue(i));
+
+			if (valFreq >= maxFreq){
 				maxIndex=i;
+				maxFreq = valFreq;
 			}
-			else
-				maxIndex=i+1;
+
 		}
 		return attribute.getValue(maxIndex);
 	}
@@ -392,7 +394,13 @@ public class Data {
 		as.add(12);
 		as.add(13);
 
-		System.out.println();
+
+
+		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(0)));
+		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(1)));
+		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(2)));
+		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(3)));
+		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(4)));
 
 	}
 
