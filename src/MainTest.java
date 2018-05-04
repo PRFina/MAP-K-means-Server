@@ -1,4 +1,5 @@
 import data.Data;
+import data.OutOfRangeSampleSize;
 import keyboardinput.Keyboard;
 import mining.KMeansMiner;
 public class MainTest {
@@ -12,14 +13,21 @@ public class MainTest {
 		
 		boolean continueFlag=false;
 		do {
-			System.out.println("Inserisci numero cluster (min 2 - max "+data.getNumberOfExamples()+")");
+			System.out.println("Inserisci numero cluster (min 1 - max "+data.countDistinctTuples()+")");
 			int k=Keyboard.readInt();
 				
 			KMeansMiner kmeans=new KMeansMiner(k);
-			int numIter= kmeans.kmeans(data);
+			try {
 
-			System.out.println("Numero di iterazioni eseguite: "+numIter);
-			System.out.println(kmeans.getC().toString(data));
+				int numIter= kmeans.kmeans(data);
+				System.out.println("Numero di iterazioni eseguite: "+numIter);
+				System.out.println(kmeans.getC().toString(data));
+			}
+			catch(OutOfRangeSampleSize e){
+				System.out.println(e.getMessage() + "");
+			}
+
+
 			
 			continueFlag=false;
 			System.out.println("Vuoi ripetere l'esecuzione del K-Means? (y/n)");

@@ -174,7 +174,11 @@ public class Data {
 	 * @param k
 	 * @return array of indexes
 	 */
-	public int[] sampling(int k) {
+	public int[] sampling(int k) throws OutOfRangeSampleSize {
+		if ( k <=0 || k>= this.distinctTuple) {
+			throw new OutOfRangeSampleSize("Numero di clusters out-of-range");
+		}
+
 		int centroidIndexes[] = new int[k];
 		Random rand = new Random(System.currentTimeMillis());
 		
