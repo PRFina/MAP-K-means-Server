@@ -1,6 +1,9 @@
 package data;
-import java.util.Arrays;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.TreeSet;
+import java.lang.Iterable;
 import utility.ArraySet;
 /**
  * This class provide an implementation of a discrete attribute type, categorical data like blood type, music genres, days of the week.
@@ -8,9 +11,9 @@ import utility.ArraySet;
  * @version 1.0
  *
  */
-public class DiscreteAttribute extends Attribute {
+public class DiscreteAttribute extends Attribute implements Iterable<String> {
 	
-	private String values[];
+	private  TreeSet<String> values;
 	
 	/**
 	 * Construct an instance of a discrete attribute.
@@ -18,25 +21,21 @@ public class DiscreteAttribute extends Attribute {
 	 * @param index index of the attribute.
 	 * @param values array of string, each string in the array is one of the attribute possible value.
 	 */
-	DiscreteAttribute(String name, int index, String values[]) {
+	DiscreteAttribute(String name, int index, TreeSet<String> values) {
 		super(name, index);
 		this.values = values;
 	}
+
+
 	/**
 	 * Get the values number that attribute can assume.
 	 * @return the number of all attribute values
 	 */
 	int getNumberOfDistinctValues() {
-		return this.values.length;
+		return this.values.size();
 	}
-	/**
-	 * Get the i-th attribute value.
-	 * @param i index of the i-th attribute value
-	 * @return the i-th attribute value
-	 */
-	String getValue(int i) {
-		return this.values[i];
-	}
+
+
 	/**
 	 * Get the number of occurrences of v in the Data's row indexed by idList 
 	 * @param data
@@ -59,7 +58,29 @@ public class DiscreteAttribute extends Attribute {
 	}
 
 	public String toString(){
-	    return this.getName() +" (@ "+ this.getIndex() + ") : " + Arrays.toString(values);
+	    return this.getName() +
+				" (@ "+ this.getIndex() + ") : " +
+				this.values.toString();
     }
 
+	@Override
+	public Iterator<String> iterator() {
+		return this.values.iterator();
+	}
+
+	public static void main(String[] args){
+
+		TreeSet<String> ts = new TreeSet<>();
+		ts.add("A");
+		ts.add("B");
+		ts.add("C");
+
+		DiscreteAttribute a = new DiscreteAttribute("Humidty",2,ts);
+		System.out.println(a.toString());
+
+
+
+
+
+	}
 }
