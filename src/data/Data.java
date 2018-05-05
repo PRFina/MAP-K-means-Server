@@ -15,8 +15,47 @@ public class Data {
 	private int numberOfExamples;
 	private Attribute explanatorySet[];
 	private int distinctTuple;
-	
-	
+
+	//TODO: controllare visibilità inner class, TODO Test this class
+	class Example implements Comparable<Example>{
+		List<Object> example = new ArrayList<>();
+
+		void add(Object a){
+			this.example.add(a);
+		}
+
+		Object get(int i){
+			return this.example.get(i);
+		}
+
+		@Override
+		public int compareTo(Example ex) {
+			int comp = 0;
+			Iterator<Object> it1 = this.example.iterator();
+			Iterator<Object> it2 = ex.example.iterator();
+
+			while(it1.hasNext() && it2.hasNext())
+			{
+				comp = ((Comparable)it1.next()).compareTo(it2.next());
+				if (comp != 0)
+					break;
+			}
+			return comp;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder str = new StringBuilder();
+
+			for(Object o: example) {
+				str.append(o.toString());
+			}
+			return str.toString();
+		}
+	}
+
+
+
 	public Data(){
 		
 		this.data = new Object [14][5];
