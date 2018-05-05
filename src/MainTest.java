@@ -13,7 +13,7 @@ public class MainTest {
 		
 		boolean continueFlag=false;
 		do {
-			System.out.println("Inserisci numero cluster (min 1 - max "+data.countDistinctTuples()+")");
+			System.out.println("Inserisci numero cluster (min 1 - max "+data.getNumberOfExamples()+")");
 			int k=Keyboard.readInt();
 				
 			KMeansMiner kmeans=new KMeansMiner(k);

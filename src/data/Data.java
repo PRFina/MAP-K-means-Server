@@ -2,6 +2,7 @@ package data;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import sun.reflect.generics.tree.Tree;
 import utility.ArraySet;
 
 /**
@@ -11,10 +12,9 @@ import utility.ArraySet;
  */
 
 public class Data {
-	private Object data [][];
+	private List<Example> data;
 	private int numberOfExamples;
-	private Attribute explanatorySet[];
-	private int distinctTuple;
+	private List<Attribute> explanatorySet;
 
 	//TODO: controllare visibilità inner class, TODO Test this class
 	class Example implements Comparable<Example>{
@@ -48,7 +48,7 @@ public class Data {
 			StringBuilder str = new StringBuilder();
 
 			for(Object o: example) {
-				str.append(o.toString());
+				str.append(o.toString()+", ");
 			}
 			return str.toString();
 		}
@@ -58,127 +58,149 @@ public class Data {
 
 	public Data(){
 		
-		this.data = new Object [14][5];
-		this.numberOfExamples = 14;		 
-		this.explanatorySet = new Attribute[5];
+		Example ex0=new Example();
+		Example ex1=new Example();
+		Example ex2=new Example();
+		Example ex3=new Example();
+		Example ex4=new Example();
+		Example ex5=new Example();
+		Example ex6=new Example();
+		Example ex7=new Example();
+		Example ex8=new Example();
+		Example ex9=new Example();
+		Example ex10=new Example();
+		Example ex11=new Example();
+		Example ex12=new Example();
+		Example ex13=new Example();
 
-		
-		String outLookValues[]=new String[3];
-		outLookValues[0]="overcast";
-		outLookValues[1]="rain";
-		outLookValues[2]="sunny";
-		explanatorySet[0] = new DiscreteAttribute("Outlook",0, outLookValues);
-		
-		String temperatureValues[]=new String[3];
-		temperatureValues[0]="hot";
-		temperatureValues[1]="mild";
-		temperatureValues[2]="cool";
-		explanatorySet[1] = new DiscreteAttribute("Temperature",1, temperatureValues);
-		
-		String humidityValues[]=new String[3];
-		humidityValues[0]="high";
-		humidityValues[1]="normal";
-		humidityValues[2]="diocane";
-		explanatorySet[2] = new DiscreteAttribute("Humidity",2, humidityValues);
-		
-		String windValues[]=new String[3];
-		windValues[0]="strong";
-		windValues[1]="weak";
-		windValues[2]="pio";
-		explanatorySet[3] = new DiscreteAttribute("Wind",3, windValues);
-		
-		String playTennisValues[]=new String[3];
-		playTennisValues[0]="no";
-		playTennisValues[1]="yes";
-		playTennisValues[2]="forse";
-		explanatorySet[4] = new DiscreteAttribute("PlayTennis",4, playTennisValues);
+		ex0.add("sunny");
+		ex1.add("sunny");
+		ex2.add("overcast");
+		ex3.add("rain");
+		ex4.add("rain");
+		ex5.add("rain");
+		ex6.add("overcast");
+		ex7.add("sunny");
+		ex8.add("sunny");
+		ex9.add("rain");
+		ex10.add("sunny");
+		ex11.add("overcast");
+		ex12.add("overcast");
+		ex13.add("rain");
 
-		//Manually fill data table
-		this.data[0][0]="sunny";
-		this.data[0][1]="hot";
-		this.data[0][2]="high";
-		this.data[0][3]="weak";
-		this.data[0][4]="no";
+		ex0.add("hot");
+		ex1.add("hot");
+		ex2.add("hot");
+		ex3.add("mild");
+		ex4.add("cool");
+		ex5.add("cool");
+		ex6.add("cool");
+		ex7.add("mild");
+		ex8.add("cool");
+		ex9.add("mild");
+		ex10.add("mild");
+		ex11.add("mild");
+		ex12.add("hot");
+		ex13.add("mild");
 
-		this.data[1][0]="sunny";
-		this.data[1][1]="hot";
-		this.data[1][2]="high";
-		this.data[1][3]="strong";
-		this.data[1][4]="no";
+		ex0.add("high");
+		ex1.add("high");
+		ex2.add("high");
+		ex3.add("high");
+		ex4.add("normal");
+		ex5.add("normal");
+		ex6.add("normal");
+		ex7.add("high");
+		ex8.add("normal");
+		ex9.add("normal");
+		ex10.add("normal");
+		ex11.add("high");
+		ex12.add("normal");
+		ex13.add("high");
 
-		this.data[2][0]="overcast";
-		this.data[2][1]="hot";
-		this.data[2][2]="high";
-		this.data[2][3]="weak";
-		this.data[2][4]="yes";
+		ex0.add("weak");
+		ex1.add("strong");
+		ex2.add("weak");
+		ex3.add("weak");
+		ex4.add("weak");
+		ex5.add("strong");
+		ex6.add("strong");
+		ex7.add("weak");
+		ex8.add("weak");
+		ex9.add("weak");
+		ex10.add("strong");
+		ex11.add("strong");
+		ex12.add("weak");
+		ex13.add("strong");
 
-		this.data[3][0]="rain";
-		this.data[3][1]="mild";
-		this.data[3][2]="high";
-		this.data[3][3]="weak";
-		this.data[3][4]="yes";
+		ex0.add("no");
+		ex1.add("no");
+		ex2.add("yes");
+		ex3.add("yes");
+		ex4.add("yes");
+		ex5.add("no");
+		ex6.add("yes");
+		ex7.add("no");
+		ex8.add("yes");
+		ex9.add("yes");
+		ex10.add("yes");
+		ex11.add("yes");
+		ex12.add("yes");
+		ex13.add("no");
 
-		this.data[4][0]="rain";
-		this.data[4][1]="cool";
-		this.data[4][2]="normal";
-		this.data[4][3]="weak";
-		this.data[4][4]="yes";
+		TreeSet<Example> tempData = new TreeSet();
+		tempData.add(ex0);
+		tempData.add(ex1);
+		tempData.add(ex2);
+		tempData.add(ex3);
+		tempData.add(ex4);
+		tempData.add(ex5);
+		tempData.add(ex6);
+		tempData.add(ex7);
+		tempData.add(ex8);
+		tempData.add(ex9);
+		tempData.add(ex10);
+		tempData.add(ex11);
+		tempData.add(ex12);
+		tempData.add(ex13);
 
-		this.data[5][0]="rain";
-		this.data[5][1]="cool";
-		this.data[5][2]="normal";
-		this.data[5][3]="strong";
-		this.data[5][4]="no";
+		this.data = new ArrayList<>(tempData);
+		this.numberOfExamples = this.data.size();
 
-		this.data[6][0]="overcast";
-		this.data[6][1]="cool";
-		this.data[6][2]="normal";
-		this.data[6][3]="strong";
-		this.data[6][4]="yes";
 
-		this.data[7][0]="sunny";
-		this.data[7][1]="mild";
-		this.data[7][2]="high";
-		this.data[7][3]="weak";
-		this.data[7][4]="no";
+		TreeSet<String> outlookValues = new TreeSet<>();
+		outlookValues.add("sunny");
+		outlookValues.add("overcast");
+		outlookValues.add("rain");
+		DiscreteAttribute outlook = new DiscreteAttribute("Outlook", 0, outlookValues);
 
-		this.data[8][0]="sunny";
-		this.data[8][1]="cool";
-		this.data[8][2]="normal";
-		this.data[8][3]="weak";
-		this.data[8][4]="yes";
+		TreeSet<String> temperatureValues = new TreeSet<>();
+		temperatureValues.add("hot");
+		temperatureValues.add("mild");
+		temperatureValues.add("cool");
+		DiscreteAttribute temperature = new DiscreteAttribute("Temperature", 1, temperatureValues);
 
-		this.data[9][0]="rain";
-		this.data[9][1]="mild";
-		this.data[9][2]="normal";
-		this.data[9][3]="weak";
-		this.data[9][4]="yes";
+		TreeSet<String> humidityValues = new TreeSet<>();
+		humidityValues.add("high");
+		humidityValues.add("normal");
+		DiscreteAttribute humidity = new DiscreteAttribute("Humidity", 2, humidityValues);
 
-		this.data[10][0]="sunny";
-		this.data[10][1]="mild";
-		this.data[10][2]="normal";
-		this.data[10][3]="strong";
-		this.data[10][4]="yes";
+		TreeSet<String> windValues = new TreeSet<>();
+		windValues.add("weak");
+		windValues.add("strong");
+		DiscreteAttribute wind = new DiscreteAttribute("Wind", 3, windValues);
 
-		this.data[11][0]="overcast";
-		this.data[11][1]="mild";
-		this.data[11][2]="high";
-		this.data[11][3]="strong";
-		this.data[11][4]="yes";
+		TreeSet<String> playTennisValues = new TreeSet<>();
+		playTennisValues.add("yes");
+		playTennisValues.add("no");
+		DiscreteAttribute playTennis = new DiscreteAttribute("Play Tennis", 4, playTennisValues);
 
-		this.data[12][0]="overcast";
-		this.data[12][1]="hot";
-		this.data[12][2]="normal";
-		this.data[12][3]="weak";
-		this.data[12][4]="yes";
-
-		this.data[13][0]="rain";
-		this.data[13][1]="mild";
-		this.data[13][2]="high";
-		this.data[13][3]="strong";
-		this.data[13][4]="no";
-
-		this.distinctTuple = countDistinctTuples();
+		this.explanatorySet = new LinkedList<>();
+		this.explanatorySet.add(outlook);
+		this.explanatorySet.add(temperature);
+		this.explanatorySet.add(humidity);
+		this.explanatorySet.add(wind);
+		this.explanatorySet.add(playTennis);
 
 	}
 	
@@ -187,22 +209,22 @@ public class Data {
 	}
 	
 	public int getNumberOfAttributes(){
-		return this.explanatorySet.length;
+		return this.explanatorySet.size();
 	}
 	
 	public Object getAttributeValue(int exampleIndex, int attributeIndex){
-		return this.data[exampleIndex][attributeIndex];
+		return this.data.get(exampleIndex).get(attributeIndex);
 	}
 	
 	public Attribute getAttribute(int index){
-		return this.explanatorySet[index];
+		return this.explanatorySet.get(index);
 	}
 	
 	public Tuple getItemSet(int index) {
-		Tuple tuple = new Tuple(explanatorySet.length); // ASK why code in kmeans2.pdf refer to explanatory set??
-		for (int i = 0; i < explanatorySet.length; i++) {
-			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)explanatorySet[i], 
-					(String) data[index][i]); //ASK perchè dobbiamo usare discrete attribute quando attribute set è un array di tipo attribute (suo supertipo), il cast eventualmente è giusto??
+		Tuple tuple = new Tuple(explanatorySet.size());
+		for (int i = 0; i < explanatorySet.size(); i++) {
+			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)explanatorySet.get(i),
+					(String) this.getAttributeValue(index,i));
 			tuple.add(tupleItem, i);
 		}
 		return tuple;
@@ -214,7 +236,7 @@ public class Data {
 	 * @return array of indexes
 	 */
 	public int[] sampling(int k) throws OutOfRangeSampleSize {
-		if ( k <=0 || k>= this.distinctTuple) {
+		if ( k <=0 || k>= this.getNumberOfExamples()) {
 			throw new OutOfRangeSampleSize("Numero di clusters out-of-range");
 		}
 
@@ -299,32 +321,25 @@ public class Data {
 	 */
 	//TODO: review efficiency of method
 	String computePrototype(ArraySet idList, DiscreteAttribute attribute) {
-		int maxIndex=0;
-		int maxFreq = attribute.frequency(this,idList,attribute.getValue(0));
+		Iterator<String> it = attribute.iterator();
 
-		for (int i = 1; i < attribute.getNumberOfDistinctValues(); i++) {
-			int valFreq =attribute.frequency(this, idList, attribute.getValue(i));
+		String maxValue =it.next();
+		int maxFreq = attribute.frequency(this,idList,maxValue);
 
-			if (valFreq >= maxFreq){
-				maxIndex=i;
-				maxFreq = valFreq;
-			}
+		while(it.hasNext()){
+			String currentValue = it.next();
+			int currentFreq = attribute.frequency(this, idList, currentValue);
 
-		}
-		return attribute.getValue(maxIndex);
-	}
-
-	public int countDistinctTuples() {
-		int counter=0;
-		for (int i = 1; i < this.numberOfExamples-1; i++) {
-			for(int j= i+1; j< this.numberOfExamples; j++){
-				if (this.compare(i,j))
-					counter++;
+			if (currentFreq >= maxFreq){
+				maxValue = currentValue;
+				maxFreq = currentFreq;
 			}
 		}
-		return this.numberOfExamples-counter;
+
+		return maxValue;
 	}
-	
+
+
 	public static void main(String args[]){
 		Data trainingSet=new Data();
 		System.out.println(trainingSet);
@@ -353,6 +368,25 @@ public class Data {
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(2)));
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(3)));
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(4)));
+
+
+		System.out.println(trainingSet.getAttributeValue(0,0));
+		System.out.println(trainingSet.getAttributeValue(13,0));
+
+		System.out.println(trainingSet.getItemSet(0));
+		System.out.println(trainingSet.getItemSet(13));
+
+		System.out.println(trainingSet.compare(0,0));
+		System.out.println(trainingSet.compare(2,7));
+
+		try {
+			System.out.println(Arrays.toString(trainingSet.sampling(4)));
+		}
+		catch (OutOfRangeSampleSize e){
+			e.printStackTrace();
+		}
+
+
 
 	}
 
