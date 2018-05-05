@@ -1,9 +1,6 @@
 package data;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
-import sun.reflect.generics.tree.Tree;
-import utility.ArraySet;
 
 /**
  * 
@@ -309,7 +306,7 @@ public class Data {
 		
 	}
 	
-	Object computePrototype(ArraySet idList, Attribute attribute) {
+	Object computePrototype(Set<Integer> idList, Attribute attribute) {
 		return computePrototype(idList, (DiscreteAttribute)attribute);
 	}
 	/**
@@ -320,7 +317,7 @@ public class Data {
 	 * @return
 	 */
 	//TODO: review efficiency of method
-	String computePrototype(ArraySet idList, DiscreteAttribute attribute) {
+	String computePrototype(Set<Integer> idList, DiscreteAttribute attribute) {
 		Iterator<String> it = attribute.iterator();
 
 		String maxValue =it.next();
@@ -345,7 +342,7 @@ public class Data {
 		System.out.println(trainingSet);
 
 
-		ArraySet as = new ArraySet();
+		Set<Integer> as = new HashSet<>();
 		as.add(0);
 		as.add(1);
 		as.add(2);
@@ -361,14 +358,11 @@ public class Data {
 		as.add(12);
 		as.add(13);
 
-
-
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(0)));
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(1)));
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(2)));
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(3)));
 		System.out.println(trainingSet.computePrototype(as,trainingSet.getAttribute(4)));
-
 
 		System.out.println(trainingSet.getAttributeValue(0,0));
 		System.out.println(trainingSet.getAttributeValue(13,0));

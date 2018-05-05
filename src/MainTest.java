@@ -20,7 +20,7 @@ public class MainTest {
 			try {
 
 				int numIter= kmeans.kmeans(data);
-				System.out.println("Numero di iterazioni eseguite: "+numIter);
+				System.out.println("Numero di iterazioni eseguite: "+numIter+"\n\n");
 				System.out.println(kmeans.getC().toString(data));
 			}
 			catch(OutOfRangeSampleSize e){

@@ -1,9 +1,10 @@
 package data;
 
 import java.util.Iterator;
+import java.util.Set;
 import java.util.TreeSet;
 import java.lang.Iterable;
-import utility.ArraySet;
+
 /**
  * This class provide an implementation of a discrete attribute type, categorical data like blood type, music genres, days of the week.
  * @author Pio Raffaele Fina
@@ -42,10 +43,10 @@ public class DiscreteAttribute extends Attribute implements Iterable<String> {
 	 * @param v
 	 * @return
 	 */
-	int frequency(Data data, ArraySet idList, String v) {
+	int frequency(Data data, Set<Integer> idList, String v) {
 		//TODO test 
 		int freqCount = 0;
-		int[] idArray = idList.toArray();
+		Integer[] idArray = idList.toArray(new Integer[idList.size()]);
 		String sample;
 		
 		for(int i=0; i < idArray.length;i++) {
@@ -67,19 +68,4 @@ public class DiscreteAttribute extends Attribute implements Iterable<String> {
 		return this.values.iterator();
 	}
 
-	public static void main(String[] args){
-
-		TreeSet<String> ts = new TreeSet<>();
-		ts.add("A");
-		ts.add("B");
-		ts.add("C");
-
-		DiscreteAttribute a = new DiscreteAttribute("Humidty",2,ts);
-		System.out.println(a.toString());
-
-
-
-
-
-	}
 }

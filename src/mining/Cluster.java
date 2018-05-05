@@ -1,17 +1,19 @@
 package mining;
+
 import data.Data;
 import data.Tuple;
-import utility.ArraySet;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Cluster {
 	private Tuple centroid;
 
-	private ArraySet clusteredData; 
+	private Set<Integer> clusteredData;
 
 
 	Cluster(Tuple centroid){
 		this.centroid=centroid;
-		clusteredData=new ArraySet();
+		clusteredData=new HashSet<>();
 		
 	}
 		
@@ -34,13 +36,13 @@ public class Cluster {
 	
 	//verifica se una transazione � clusterizzata nell'array corrente
 	boolean contain(int id){
-		return clusteredData.get(id);
+		return clusteredData.contains(id);
 	}
 	
 
 	//remove the tuple that has changed the cluster
 	void removeTuple(int id){
-		clusteredData.delete(id);
+		clusteredData.remove(id);
 		
 	}
 	
@@ -55,19 +57,19 @@ public class Cluster {
 
 	
 	public String toString(Data data){
-		String str="Centroid=(";
-		for(int i=0;i<centroid.getLength();i++)
-			str+=centroid.get(i)+ " ";
-		str+=")\nExamples:\n";
-		int array[]=clusteredData.toArray();
-		for(int i=0;i<array.length;i++){
-			str+="[";
-			for(int j=0;j<data.getNumberOfAttributes();j++)
-				str+=data.getAttributeValue(array[i], j)+" ";
-			str+="] dist="+getCentroid().getDistance(data.getItemSet(array[i]))+"\n";
+
+		StringBuilder out = new StringBuilder("Centroid = ");
+		out.append(this.centroid.toString());
+		out.append("\nExamples:\n");
+
+		for(int i: clusteredData){
+			out.append(data.getItemSet(i).toString());
+			out.append(" dist = "+this.centroid.getDistance(data.getItemSet(i))+"\n");
 		}
-		str+="-----AvgDistance="+getCentroid().avgDistance(data, array)+"-----\n";
-		return str;
+
+		out.append("-----AvgDistance="+this.centroid.avgDistance(data, clusteredData)+"-----\n\n");
+
+		return out.toString();
 	}
 
 	public static void main(String[] args){
