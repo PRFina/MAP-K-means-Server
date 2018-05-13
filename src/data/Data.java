@@ -85,20 +85,20 @@ public class Data {
 		ex12.add("overcast");
 		ex13.add("rain");
 
-		ex0.add("hot");
-		ex1.add("hot");
-		ex2.add("hot");
-		ex3.add("mild");
-		ex4.add("cool");
-		ex5.add("cool");
-		ex6.add("cool");
-		ex7.add("mild");
-		ex8.add("cool");
-		ex9.add("mild");
-		ex10.add("mild");
-		ex11.add("mild");
-		ex12.add("hot");
-		ex13.add("mild");
+		ex0.add(new Double (37.5));
+		ex1.add(new Double (38.7));
+		ex2.add(new Double (37.5));
+		ex3.add(new Double (20.5));
+		ex4.add(new Double (20.7));
+		ex5.add(new Double (21.2));
+		ex6.add(new Double (20.5));
+		ex7.add(new Double (21.2));
+		ex8.add(new Double (21.2));
+		ex9.add(new Double (19.8));
+		ex10.add(new Double (3.5));
+		ex11.add(new Double (3.6));
+		ex12.add(new Double (3.5));
+		ex13.add(new Double (3.2));
 
 		ex0.add("high");
 		ex1.add("high");
@@ -175,7 +175,7 @@ public class Data {
 		temperatureValues.add("hot");
 		temperatureValues.add("mild");
 		temperatureValues.add("cool");
-		DiscreteAttribute temperature = new DiscreteAttribute("Temperature", 1, temperatureValues);
+		ContinuousAttribute temperature = new ContinuousAttribute("Temperature", 1, 3.2, 38.7);
 
 		TreeSet<String> humidityValues = new TreeSet<>();
 		humidityValues.add("high");
@@ -305,9 +305,13 @@ public class Data {
 		return out;
 		
 	}
-	
+
+	//TODO: test
 	Object computePrototype(Set<Integer> idList, Attribute attribute) {
-		return computePrototype(idList, (DiscreteAttribute)attribute);
+		if(attribute instanceof DiscreteAttribute)
+			return computePrototype(idList, (DiscreteAttribute)attribute);
+		else if(attribute instanceof ContinuousAttribute)
+			return computePrototype(idList, (ContinuousAttribute)attribute);
 	}
 	/**
 	 * Return the most frequent attribute's value in tuples indexed by idList
@@ -336,6 +340,14 @@ public class Data {
 		return maxValue;
 	}
 
+	//TODO: test
+	Double computePrototype(Set<Integer> idList, ContinuousAttribute attribute) {
+		Double sum=0.0;
+		for(Integer i: idList){
+			sum += (Double) this.getAttributeValue(i, attribute.getIndex());
+		}
+		return sum/idList.size();
+	}
 
 	public static void main(String args[]){
 		Data trainingSet=new Data();
