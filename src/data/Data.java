@@ -310,8 +310,8 @@ public class Data {
 	Object computePrototype(Set<Integer> idList, Attribute attribute) {
 		if(attribute instanceof DiscreteAttribute)
 			return computePrototype(idList, (DiscreteAttribute)attribute);
-		else if(attribute instanceof ContinuousAttribute)
-			return computePrototype(idList, (ContinuousAttribute)attribute);
+
+		return computePrototype(idList, (ContinuousAttribute)attribute);
 	}
 	/**
 	 * Return the most frequent attribute's value in tuples indexed by idList
