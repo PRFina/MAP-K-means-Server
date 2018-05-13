@@ -216,13 +216,25 @@ public class Data {
 	public Attribute getAttribute(int index){
 		return this.explanatorySet.get(index);
 	}
-	
+
 	public Tuple getItemSet(int index) {
+		//ASK: al posto del for conviene utilizzare il foreach (con conseguente uso di iterator e di next come indice)
+		//ASK: cast ridondante di currAttr a continuous attribute, le segnature dei costruttori di ContItem e DiscItem
+		//sono diverse; contItem covrebbe prendere un ContAttr nel costruttore ma prende un Attribute, invece DiscItem
+		//prende un DiscAttr, perche?
+
 		Tuple tuple = new Tuple(explanatorySet.size());
 		for (int i = 0; i < explanatorySet.size(); i++) {
-			DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute)explanatorySet.get(i),
-					(String) this.getAttributeValue(index,i));
-			tuple.add(tupleItem, i);
+			Attribute currAttr = explanatorySet.get(i);
+			if (currAttr instanceof DiscreteAttribute) {
+				DiscreteItem tupleItem = new DiscreteItem((DiscreteAttribute) currAttr,
+						(String) this.getAttributeValue(index, i));
+				tuple.add(tupleItem, i);
+			} else if (currAttr instanceof ContinuousAttribute) {
+				ContinuousItem tupleItem = new ContinuousItem(currAttr,
+						(Double) this.getAttributeValue(index, i));
+				tuple.add(tupleItem, i);
+			}
 		}
 		return tuple;
 	}
@@ -233,7 +245,7 @@ public class Data {
 	 * @return array of indexes
 	 */
 	public int[] sampling(int k) throws OutOfRangeSampleSize {
-		if ( k <=0 || k>= this.getNumberOfExamples()) {
+		if ( k <=0 || k> this.getNumberOfExamples()) {
 			throw new OutOfRangeSampleSize("Numero di clusters out-of-range");
 		}
 
@@ -379,8 +391,8 @@ public class Data {
 		System.out.println(trainingSet.getAttributeValue(0,0));
 		System.out.println(trainingSet.getAttributeValue(13,0));
 
-		System.out.println(trainingSet.getItemSet(0));
-		System.out.println(trainingSet.getItemSet(13));
+		System.out.println(trainingSet.getItemSet(1));
+		System.out.println(trainingSet.getItemSet(3));
 
 		System.out.println(trainingSet.compare(0,0));
 		System.out.println(trainingSet.compare(2,7));
@@ -391,11 +403,7 @@ public class Data {
 		catch (OutOfRangeSampleSize e){
 			e.printStackTrace();
 		}
-
-
-
 	}
-
 }
 
 
