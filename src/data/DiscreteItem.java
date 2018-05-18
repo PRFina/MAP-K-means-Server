@@ -1,7 +1,5 @@
 package data;
 
-import java.io.Serializable;
-
 public class DiscreteItem extends Item {
 	
 	DiscreteItem(DiscreteAttribute attribute, String value) {

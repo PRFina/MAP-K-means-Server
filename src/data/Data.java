@@ -217,10 +217,7 @@ public class Data {
     }
 
     public Tuple getItemSet(int index) {
-        //ASK: al posto del for conviene utilizzare il foreach (con conseguente uso di iterator e di next come indice)
-        //ASK: cast ridondante di currAttr a continuous attribute, le segnature dei costruttori di ContItem e DiscItem
-        //sono diverse; contItem covrebbe prendere un ContAttr nel costruttore ma prende un Attribute, invece DiscItem
-        //prende un DiscAttr, perche?
+        //TODO uniformare  i costruttori di cont e discr attribute per eliminare i cast
 
         Tuple tuple = new Tuple(explanatorySet.size());
         for (int i = 0; i < explanatorySet.size(); i++) {
