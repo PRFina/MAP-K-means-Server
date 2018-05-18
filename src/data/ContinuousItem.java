@@ -1,5 +1,6 @@
 package data;
 
+import java.io.Serializable;
 import java.lang.Math;
 
 public class ContinuousItem extends Item {

@@ -1,4 +1,7 @@
 package data;
+
+import java.io.Serializable;
+
 /**
  * This class represent the base structure for an attribute object, since the class is abstract it can't be instantiated.
  * 
@@ -6,7 +9,7 @@ package data;
  * @version 1.0
  *
  */
-abstract class Attribute {
+abstract class Attribute implements Serializable {
 
 	private String name;
 	private int index;

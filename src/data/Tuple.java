@@ -1,5 +1,6 @@
 package data;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import java.util.Set;
  * @author Pio Raffaele Fina
  *
  */
-public class Tuple {
+public class Tuple implements Serializable {
 	
 	private Item[] tuple;
 	

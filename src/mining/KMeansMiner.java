@@ -2,12 +2,22 @@ package mining;
 import data.Data;
 import data.OutOfRangeSampleSize;
 
-public class KMeansMiner {
+import java.io.*;
+
+public class KMeansMiner implements Serializable {
 
 	ClusterSet C;
 	
 	public KMeansMiner(int k){
 		C = new ClusterSet(k);
+	}
+
+	public KMeansMiner(String fileName) throws IOException, ClassNotFoundException {
+		FileInputStream inStream = new FileInputStream(fileName);
+		ObjectInputStream objStream = new ObjectInputStream(inStream);
+		this.C = (ClusterSet) objStream.readObject();
+		objStream.close();
+		inStream.close();
 	}
 	
 	public ClusterSet getC() {
@@ -46,6 +56,16 @@ public class KMeansMiner {
 		while(changedCluster);
 		
 		return numberOfIterations;
+	}
+
+	public void salva(String fileName) throws IOException {
+		FileOutputStream fileStream = new FileOutputStream(fileName);
+		ObjectOutputStream objStream = new ObjectOutputStream(fileStream);
+
+		objStream.writeObject(this.C);
+
+		objStream.close();
+		fileStream.close();
 	}
 	
 	

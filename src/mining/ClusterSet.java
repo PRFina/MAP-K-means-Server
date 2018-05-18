@@ -3,7 +3,9 @@ import data.Data;
 import data.OutOfRangeSampleSize;
 import data.Tuple;
 
-public class ClusterSet {
+import java.io.Serializable;
+
+public class ClusterSet implements Serializable {
 	private Cluster[] C;
 	private int i;
 	
