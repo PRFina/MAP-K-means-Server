@@ -7,8 +7,6 @@ import java.sql.Statement;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -16,6 +14,7 @@ import java.util.TreeSet;
 
 
 import database.TableSchema.Column;
+import javafx.scene.control.Tab;
 
 
 public class TableData {
@@ -34,6 +33,9 @@ public class TableData {
 		String sqlQuery = String.format("SELECT DISTINCT * FROM %s", table);
 		ResultSet result = stmt.executeQuery(sqlQuery);
 		TableSchema schema = new TableSchema(db, table);
+		if(!result.isBeforeFirst()){
+			throw new EmptySetException("No results for this query.");
+		}
 
 		while(result.next()){
 			Example ex = new Example();
@@ -52,22 +54,73 @@ public class TableData {
 		return exampleList;
 	}
 
-	/*
-	public  Set<Object>getDistinctColumnValues(String table,Column column) throws SQLException{
+
+	public  Set<Object>getDistinctColumnValues(String table, Column column) throws SQLException{
+		Set<Object> attributeValues = new TreeSet<>();
+
+		Statement stmt = db.getConnection().createStatement();
+		String columnName = column.getColumnName();
+		String SQLQuery = String.format("SELECT DISTINCT %s FROM %s ORDER BY %s ASC", columnName, table, columnName);
+		ResultSet res = stmt.executeQuery(SQLQuery);
+
+		if (column.isNumber()){
+			while(res.next()){
+				attributeValues.add(res.getDouble(columnName));
+			}
+		}else {
+			while(res.next()){
+				attributeValues.add(res.getString(columnName));
+			}
+		}
+		res.close();
+		stmt.close();
+
+		return  attributeValues;
 
 
 	}
 
 	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException,NoValueException{
+		Statement stmt = db.getConnection().createStatement();
+		String columnName = column.getColumnName();
+		String SQLQueryMin = String.format("SELECT MIN(%s) AS %s FROM %s",columnName, columnName, table);
+		String SQLQueryMax = String.format("SELECT MAX(%s) AS %s FROM %s",columnName, columnName, table);
+		ResultSet res = null;
 
+		if(aggregate==QUERY_TYPE.MIN)
+			res = stmt.executeQuery(SQLQueryMin);
+		else if(aggregate==QUERY_TYPE.MAX)
+			res = stmt.executeQuery(SQLQueryMax);
+
+		res.next();
+
+		Double resDouble = 0.0;
+		String resString = "";
+
+		if(column.isNumber()) {
+			resDouble = res.getDouble(columnName);
+		}else
+			resString = res.getString(columnName);
+
+		res.close();
+		stmt.close();
+
+		if(column.isNumber()) {
+			return resDouble;
+		}else
+			return resString;
 	}
 
-*/
-	public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException {
+
+	public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException, NoValueException {
 		DbAccess db = new DbAccess();
 		db.initConnection();
 		TableData td = new TableData(db);
-		System.out.println(td.getDistinctTransactions("playtennis"));
+		TableSchema ts = new TableSchema(db,"playtennis");
+
+
+		System.out.println(td.getAggregateColumnValue("playtennis", ts.getColumn(1), QUERY_TYPE.MIN));
+		System.out.println(td.getAggregateColumnValue("playtennis", ts.getColumn(1), QUERY_TYPE.MAX));
 	}
 	
 
