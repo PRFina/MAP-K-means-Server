@@ -331,7 +331,7 @@ public class Data {
      * @param attribute
      * @return
      */
-    //TODO: review efficiency of method
+
     String computePrototype(Set<Integer> idList, DiscreteAttribute attribute) {
         Iterator<String> it = attribute.iterator();
 
@@ -351,7 +351,6 @@ public class Data {
         return maxValue;
     }
 
-    //TODO: test
     Double computePrototype(Set<Integer> idList, ContinuousAttribute attribute) {
         Double sum = 0.0;
         for (Integer i : idList) {
