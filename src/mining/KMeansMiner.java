@@ -70,7 +70,7 @@ public class KMeansMiner implements Serializable {
 	
 	
 	
-	
+	/*
 	
 	public static void main(String[] args) {
 		Data trainingSet=new Data();
@@ -80,5 +80,5 @@ public class KMeansMiner implements Serializable {
 
 
 	}
-
+*/
 }

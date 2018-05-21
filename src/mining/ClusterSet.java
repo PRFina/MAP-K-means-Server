@@ -82,7 +82,7 @@ public class ClusterSet implements Serializable {
 		}
 		return out;
 	}
-
+/*
 	public static void main(String[] args) {
 		ClusterSet c = new ClusterSet(3);
 
@@ -95,5 +95,5 @@ public class ClusterSet implements Serializable {
 
 		System.out.println(c.nearestCluster(trainingSet.getItemSet(0)));
 	}
-
+*/
 }

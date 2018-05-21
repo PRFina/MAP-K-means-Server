@@ -36,6 +36,7 @@ public class MainTest {
 		return new KMeansMiner(fileName+".dmp");
 		
 	}
+	/*
 	public static void main(String[] args) {
 		
 		do{
@@ -104,6 +105,7 @@ public class MainTest {
 			}
 		while(true);
 		}
+		*/
 	}
 
 

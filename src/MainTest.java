@@ -1,14 +1,20 @@
 import data.Data;
 import data.OutOfRangeSampleSize;
+import database.DatabaseConnectionException;
+import database.EmptySetException;
+import database.NoValueException;
 import keyboardinput.Keyboard;
 import mining.KMeansMiner;
+
+import java.sql.SQLException;
+
 public class MainTest {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		Data data =new Data();
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, NoValueException, EmptySetException, DatabaseConnectionException {
+		Data data =new Data("playtennis");
 		System.out.println(data);
 		
 		boolean continueFlag=false;

@@ -14,7 +14,7 @@ public class DbAccess {
     final String PASSWORD = "map";
     Connection conn;
 
-    void initConnection() throws DatabaseConnectionException, ClassNotFoundException, SQLException {
+    public void initConnection() throws DatabaseConnectionException, ClassNotFoundException, SQLException {
         Class.forName(DRIVER_CLASS_NAME);
         String url = DBMS+"://" + SERVER + ":" + PORT + "/" + DATABASE;
         try{
@@ -24,7 +24,7 @@ public class DbAccess {
         }
     }
 
-    void closeConnection() throws SQLException {
+    public void closeConnection() throws SQLException {
         conn.close();
     }
 

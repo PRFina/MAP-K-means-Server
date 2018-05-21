@@ -73,7 +73,7 @@ public class Cluster implements Serializable {
 
 		return out.toString();
 	}
-
+/*
 	public static void main(String[] args){
 		Data d = new Data();
 
@@ -89,5 +89,5 @@ public class Cluster implements Serializable {
 
 
 	}
-
+*/
 }

@@ -1,6 +1,9 @@
 package data;
 
+import java.sql.SQLException;
 import java.util.*;
+
+import database.*;
 
 
 /**
@@ -13,191 +16,33 @@ public class Data {
     private int numberOfExamples;
     private List<Attribute> explanatorySet;
 
-    //TODO: controllare visibilità inner class, TODO Test this class
-    class Example implements Comparable<Example> {
-        List<Object> example = new ArrayList<>();
+    public Data(String tableName) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException, NoValueException {
+        DbAccess db = new DbAccess();
+        db.initConnection();
+        TableData td = new TableData(db);
+        TableSchema schema = new TableSchema(db, tableName);
+        data=td.getDistinctTransactions(tableName);
+        numberOfExamples = data.size();
+        explanatorySet = new ArrayList<>();
 
-        void add(Object a) {
-            this.example.add(a);
-        }
-
-        Object get(int i) {
-            return this.example.get(i);
-        }
-
-        @Override
-        public int compareTo(Example ex) {
-            int comp = 0;
-            Iterator<Object> it1 = this.example.iterator();
-            Iterator<Object> it2 = ex.example.iterator();
-
-			while(it1.hasNext() && it2.hasNext())
-			{
-				comp = ((Comparable)it1.next()).compareTo(it2.next());
-				if (comp != 0)
-					break;
-			}
-			return comp;
-		}
-
-        @Override
-        public String toString() {
-            StringBuilder str = new StringBuilder();
-
-            for (Object o : example) {
-                str.append(o.toString() + ", ");
+        for(int i=0; i<schema.getNumberOfAttributes(); i++){
+            TableSchema.Column col = schema.getColumn(i);
+            if(schema.getColumn(i).isNumber()){
+                Double min = (Double) td.getAggregateColumnValue(tableName, col, QUERY_TYPE.MIN);
+                Double max = (Double) td.getAggregateColumnValue(tableName, col, QUERY_TYPE.MAX);
+                explanatorySet.add(new ContinuousAttribute(col.getColumnName(), i, min, max));
+            }else{
+                //ASK: dato che il metodo restituisce un set di object e il costruttore di DiscreteAttribute prende un set
+                // di stringhe, l'unico modo per passare set come parametro è fare il cast da object a string?
+                TreeSet<String> set = new TreeSet<>();
+                for(Object o: td.getDistinctColumnValues(tableName, col)){
+                    set.add((String) o);
+                }
+                explanatorySet.add(new DiscreteAttribute(col.getColumnName(), i, set));
             }
-            return str.toString();
         }
-    }
 
-
-    public Data() {
-
-        Example ex0 = new Example();
-        Example ex1 = new Example();
-        Example ex2 = new Example();
-        Example ex3 = new Example();
-        Example ex4 = new Example();
-        Example ex5 = new Example();
-        Example ex6 = new Example();
-        Example ex7 = new Example();
-        Example ex8 = new Example();
-        Example ex9 = new Example();
-        Example ex10 = new Example();
-        Example ex11 = new Example();
-        Example ex12 = new Example();
-        Example ex13 = new Example();
-
-        ex0.add("sunny");
-        ex1.add("sunny");
-        ex2.add("overcast");
-        ex3.add("rain");
-        ex4.add("rain");
-        ex5.add("rain");
-        ex6.add("overcast");
-        ex7.add("sunny");
-        ex8.add("sunny");
-        ex9.add("rain");
-        ex10.add("sunny");
-        ex11.add("overcast");
-        ex12.add("overcast");
-        ex13.add("rain");
-
-        ex0.add(new Double(37.5));
-        ex1.add(new Double(38.7));
-        ex2.add(new Double(37.5));
-        ex3.add(new Double(20.5));
-        ex4.add(new Double(20.7));
-        ex5.add(new Double(21.2));
-        ex6.add(new Double(20.5));
-        ex7.add(new Double(21.2));
-        ex8.add(new Double(21.2));
-        ex9.add(new Double(19.8));
-        ex10.add(new Double(3.5));
-        ex11.add(new Double(3.6));
-        ex12.add(new Double(3.5));
-        ex13.add(new Double(3.2));
-
-        ex0.add("high");
-        ex1.add("high");
-        ex2.add("high");
-        ex3.add("high");
-        ex4.add("normal");
-        ex5.add("normal");
-        ex6.add("normal");
-        ex7.add("high");
-        ex8.add("normal");
-        ex9.add("normal");
-        ex10.add("normal");
-        ex11.add("high");
-        ex12.add("normal");
-        ex13.add("high");
-
-        ex0.add("weak");
-        ex1.add("strong");
-        ex2.add("weak");
-        ex3.add("weak");
-        ex4.add("weak");
-        ex5.add("strong");
-        ex6.add("strong");
-        ex7.add("weak");
-        ex8.add("weak");
-        ex9.add("weak");
-        ex10.add("strong");
-        ex11.add("strong");
-        ex12.add("weak");
-        ex13.add("strong");
-
-        ex0.add("no");
-        ex1.add("no");
-        ex2.add("yes");
-        ex3.add("yes");
-        ex4.add("yes");
-        ex5.add("no");
-        ex6.add("yes");
-        ex7.add("no");
-        ex8.add("yes");
-        ex9.add("yes");
-        ex10.add("yes");
-        ex11.add("yes");
-        ex12.add("yes");
-        ex13.add("no");
-
-        TreeSet<Example> tempData = new TreeSet();
-        tempData.add(ex0);
-        tempData.add(ex1);
-        tempData.add(ex2);
-        tempData.add(ex3);
-        tempData.add(ex4);
-        tempData.add(ex5);
-        tempData.add(ex6);
-        tempData.add(ex7);
-        tempData.add(ex8);
-        tempData.add(ex9);
-        tempData.add(ex10);
-        tempData.add(ex11);
-        tempData.add(ex12);
-        tempData.add(ex13);
-
-        this.data = new ArrayList<>(tempData);
-        this.numberOfExamples = this.data.size();
-
-
-        TreeSet<String> outlookValues = new TreeSet<>();
-        outlookValues.add("sunny");
-        outlookValues.add("overcast");
-        outlookValues.add("rain");
-        DiscreteAttribute outlook = new DiscreteAttribute("Outlook", 0, outlookValues);
-
-        TreeSet<String> temperatureValues = new TreeSet<>();
-        temperatureValues.add("hot");
-        temperatureValues.add("mild");
-        temperatureValues.add("cool");
-        ContinuousAttribute temperature = new ContinuousAttribute("Temperature", 1, 3.2, 38.7);
-
-        TreeSet<String> humidityValues = new TreeSet<>();
-        humidityValues.add("high");
-        humidityValues.add("normal");
-        DiscreteAttribute humidity = new DiscreteAttribute("Humidity", 2, humidityValues);
-
-        TreeSet<String> windValues = new TreeSet<>();
-        windValues.add("weak");
-        windValues.add("strong");
-        DiscreteAttribute wind = new DiscreteAttribute("Wind", 3, windValues);
-
-        TreeSet<String> playTennisValues = new TreeSet<>();
-        playTennisValues.add("yes");
-        playTennisValues.add("no");
-        DiscreteAttribute playTennis = new DiscreteAttribute("Play Tennis", 4, playTennisValues);
-
-        this.explanatorySet = new LinkedList<>();
-        this.explanatorySet.add(outlook);
-        this.explanatorySet.add(temperature);
-        this.explanatorySet.add(humidity);
-        this.explanatorySet.add(wind);
-        this.explanatorySet.add(playTennis);
-
+        db.closeConnection();
     }
 
     public int getNumberOfExamples() {
@@ -359,6 +204,7 @@ public class Data {
         return sum / idList.size();
     }
 
+    /*
     public static void main(String args[]) {
         Data trainingSet = new Data();
         System.out.println(trainingSet);
@@ -400,7 +246,8 @@ public class Data {
         } catch (OutOfRangeSampleSize e) {
             e.printStackTrace();
         }
-    }
+
+    }*/
 }
 
 
