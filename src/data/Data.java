@@ -32,8 +32,6 @@ public class Data {
                 Double max = (Double) td.getAggregateColumnValue(tableName, col, QUERY_TYPE.MAX);
                 explanatorySet.add(new ContinuousAttribute(col.getColumnName(), i, min, max));
             }else{
-                //ASK: dato che il metodo restituisce un set di object e il costruttore di DiscreteAttribute prende un set
-                // di stringhe, l'unico modo per passare set come parametro è fare il cast da object a string?
                 TreeSet<String> set = new TreeSet<>();
                 for(Object o: td.getDistinctColumnValues(tableName, col)){
                     set.add((String) o);

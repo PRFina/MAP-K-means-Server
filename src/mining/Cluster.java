@@ -73,21 +73,4 @@ public class Cluster implements Serializable {
 
 		return out.toString();
 	}
-/*
-	public static void main(String[] args){
-		Data d = new Data();
-
-
-		Cluster c = new Cluster(d.getItemSet(2));
-
-		c.addData(0);
-		c.addData(2);
-		c.addData(12);
-
-		c.computeCentroid(d);
-
-
-
-	}
-*/
 }
