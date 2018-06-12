@@ -33,7 +33,7 @@ public class DbAccess {
     }
 
 
-    public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException {
+    public static void main(String[] args) throws DatabaseConnectionException, ClassNotFoundException {
         DbAccess db = new DbAccess();
         db.initConnection();
     }

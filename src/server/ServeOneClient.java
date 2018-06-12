@@ -1,21 +1,25 @@
 package server;
 
+import services.ReadClustersService;
+import services.Service;
 import mining.KMeansMiner;
-import protocol.MessageType;
-import protocol.RequestMessage;
-import protocol.ResponseMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import protocol.ResponseMessage;
+import protocol.RequestMessage;
+import protocol.MessageType;
+
+
 public class ServeOneClient extends Thread{
 
     Socket socket;
     ObjectInputStream in;
     ObjectOutputStream out;
-    KMeansMiner kmeans;
+    KMeansMiner miner;
 
     public ServeOneClient(Socket clientSocket) throws IOException {
         this.socket = clientSocket;
@@ -33,21 +37,42 @@ public class ServeOneClient extends Thread{
                 System.out.println(socket);
 
                 RequestMessage req = (RequestMessage) in.readObject();
-                System.out.println(req);
+                System.out.println(req); // DEBUG
 
-                ResponseMessage resp = null;
+                ResponseMessage resp = new ResponseMessage();
 
-                if(req.getRequestType() == MessageType.READ){
-                    resp = new ResponseMessage(MessageType.READ);
-                    resp.addBodyField("data","data is received");
-                    resp.setStatus("OK");
+                switch (req.getRequestType()){
+                    case READ: {
+                        Service serv = new ReadClustersService(req.getBodyField("file"));
+
+                        resp.setResponseType(MessageType.READ);
+                        try {
+                            resp.addBodyField("data", serv.execute());
+                            resp.setStatus("OK");
+                        } catch (ServerException e) {
+                            resp.addBodyField("errorMsg", e.getMessage());
+                            resp.setStatus("ERROR");
+                        }
+
+                        break;
+                    }
+
+                    case DISCOVER: {
+                        resp.setResponseType(MessageType.DISCOVER);
+                        resp.addBodyField("data","data is received");
+                        resp.setStatus("OK");
+                        break;
+                    }
+
+                    case INFO: {
+                        resp.setResponseType(MessageType.INFO);
+                        resp.addBodyField("data","metadata about metadata that talk about data");
+                        resp.setStatus("OK");
+                        break;
+
+                    }
                 }
-                else if(req.getRequestType() == MessageType.DISCOVER){
 
-                    resp = new ResponseMessage(MessageType.DISCOVER);
-                    resp.addBodyField("data","data is received");
-                    resp.setStatus("OK");
-                }
                 out.writeObject(resp);
             }
 

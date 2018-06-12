@@ -201,51 +201,6 @@ public class Data {
         }
         return sum / idList.size();
     }
-
-    /*
-    public static void main(String args[]) {
-        Data trainingSet = new Data();
-        System.out.println(trainingSet);
-
-
-        Set<Integer> as = new HashSet<>();
-        as.add(0);
-        as.add(1);
-        as.add(2);
-        as.add(3);
-        as.add(4);
-        as.add(5);
-        as.add(6);
-        as.add(7);
-        as.add(8);
-        as.add(9);
-        as.add(10);
-        as.add(11);
-        as.add(12);
-        as.add(13);
-
-        System.out.println(trainingSet.computePrototype(as, trainingSet.getAttribute(0)));
-        System.out.println(trainingSet.computePrototype(as, trainingSet.getAttribute(1)));
-        System.out.println(trainingSet.computePrototype(as, trainingSet.getAttribute(2)));
-        System.out.println(trainingSet.computePrototype(as, trainingSet.getAttribute(3)));
-        System.out.println(trainingSet.computePrototype(as, trainingSet.getAttribute(4)));
-
-        System.out.println(trainingSet.getAttributeValue(0, 0));
-        System.out.println(trainingSet.getAttributeValue(13, 0));
-
-        System.out.println(trainingSet.getItemSet(1));
-        System.out.println(trainingSet.getItemSet(3));
-
-        System.out.println(trainingSet.compare(0, 0));
-        System.out.println(trainingSet.compare(2, 7));
-
-        try {
-            System.out.println(Arrays.toString(trainingSet.sampling(4)));
-        } catch (OutOfRangeSampleSize e) {
-            e.printStackTrace();
-        }
-
-    }*/
 }
 
 

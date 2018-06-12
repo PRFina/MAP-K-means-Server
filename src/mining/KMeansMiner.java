@@ -6,13 +6,14 @@ import java.io.*;
 
 public class KMeansMiner implements Serializable {
 
-	ClusterSet C;
+	private ClusterSet C;
 	
 	public KMeansMiner(int k){
 		C = new ClusterSet(k);
 	}
 
 	public KMeansMiner(String fileName) throws IOException, ClassNotFoundException {
+		// REVIEW vedere come usare il try-with-resources
 		FileInputStream inStream = new FileInputStream(fileName);
 		ObjectInputStream objStream = new ObjectInputStream(inStream);
 		this.C = (ClusterSet) objStream.readObject();
@@ -31,7 +32,6 @@ public class KMeansMiner implements Serializable {
 		boolean changedCluster=false;
 		
 		do{
-			//System.out.println("\t\tIterazione n:"+numberOfIterations+"\n"+this.getC().toString(data)+"**************************************"); //DEBUG PRINT
 			numberOfIterations++;
 
 			//STEP 2
@@ -59,6 +59,7 @@ public class KMeansMiner implements Serializable {
 	}
 
 	public void salva(String fileName) throws IOException {
+		// REVIEW vedere come usare il try-with-resources
 		FileOutputStream fileStream = new FileOutputStream(fileName);
 		ObjectOutputStream objStream = new ObjectOutputStream(fileStream);
 
@@ -67,18 +68,4 @@ public class KMeansMiner implements Serializable {
 		objStream.close();
 		fileStream.close();
 	}
-	
-	
-	
-	/*
-	
-	public static void main(String[] args) {
-		Data trainingSet=new Data();
-
-		KMeansMiner kmm = new KMeansMiner(3);
-		//kmm.kmeans(trainingSet);
-
-
-	}
-*/
 }

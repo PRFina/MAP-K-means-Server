@@ -76,7 +76,7 @@ public class TableData {
 
 	}
 
-	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException,NoValueException{
+	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException {
 		Statement stmt = db.getConnection().createStatement();
 		String columnName = column.getColumnName();
 		String SQLQueryMin = String.format("SELECT MIN(%s) AS %s FROM %s",columnName, columnName, table);
@@ -108,7 +108,7 @@ public class TableData {
 	}
 
 
-	public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException, NoValueException {
+	public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException, NoValueException {
 		DbAccess db = new DbAccess();
 		db.initConnection();
 		TableData td = new TableData(db);
