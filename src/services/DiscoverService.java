@@ -25,7 +25,7 @@ public class DiscoverService implements Service{
             resp.setStatus("OK");
             resp.addBodyField("data", mineDB.toString(data));
 
-            String filePath = MultiServer.settings.getProperty("file_storage_root") + "/" + tableName + "_" + k + ".dmp";
+            String filePath = MultiServer.getConfig().getProperty("file_storage_root") + "/" + tableName + "_" + k + ".dmp";
             mineDB.salva(filePath);
 
         }catch(Exception e){

@@ -39,9 +39,10 @@ public class ServeOneClient extends Thread{
             call the right service and
             return a response message to client.
          */
+
+
         try {
             while(true){
-
                 System.out.println(socket);
 
                 RequestMessage req = (RequestMessage) in.readObject();
@@ -56,6 +57,11 @@ public class ServeOneClient extends Thread{
             e.printStackTrace();
         }
 
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

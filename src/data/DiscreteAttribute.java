@@ -44,7 +44,6 @@ public class DiscreteAttribute extends Attribute implements Iterable<String> {
 	 * @return
 	 */
 	int frequency(Data data, Set<Integer> idList, String v) {
-		//TODO test 
 		int freqCount = 0;
 		Integer[] idArray = idList.toArray(new Integer[idList.size()]);
 		String sample;

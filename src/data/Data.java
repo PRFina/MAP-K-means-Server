@@ -159,7 +159,6 @@ public class Data {
 
     }
 
-    //TODO: test
     Object computePrototype(Set<Integer> idList, Attribute attribute) {
         if (attribute instanceof DiscreteAttribute)
             return computePrototype(idList, (DiscreteAttribute) attribute);

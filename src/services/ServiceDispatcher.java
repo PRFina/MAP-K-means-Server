@@ -24,7 +24,7 @@ public class ServiceDispatcher {
         ResponseMessage  resp = null;
 
         if( service != null){
-            return service.execute(req);
+            service.execute(req);
         }
 
         return resp;
