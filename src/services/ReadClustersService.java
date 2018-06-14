@@ -5,7 +5,7 @@ import mining.KMeansMiner;
 import protocol.RequestMessage;
 import protocol.ResponseMessage;
 import server.MultiServer;
-
+// TODO ADD JAVADOC
 public class ReadClustersService implements Service {
 
     public ResponseMessage execute(RequestMessage req) {
@@ -31,8 +31,6 @@ public class ReadClustersService implements Service {
             resp.setStatus("ERROR");
             e.printStackTrace();
         }
-
-
 
         return resp;
     }

@@ -9,6 +9,7 @@ import server.MultiServer;
 import java.sql.SQLException;
 
 
+// TODO ADD JAVADOC
 
 public class DiscoverService implements Service{
     public ResponseMessage execute(RequestMessage req) {
