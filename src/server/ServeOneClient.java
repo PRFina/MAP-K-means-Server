@@ -11,7 +11,6 @@ import java.net.Socket;
 
 import protocol.ResponseMessage;
 import protocol.RequestMessage;
-import protocol.MessageType;
 import services.ServiceDispatcher;
 
 public class ServeOneClient extends Thread{

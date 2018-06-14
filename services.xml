@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+    <service class="services.NoService">NO_SERVICE</service>
+    <service class="services.ReadClustersService">READ</service>
+    <service class="services.DiscoverService">DISCOVER</service>
+</services>

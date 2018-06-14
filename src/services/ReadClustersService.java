@@ -5,7 +5,22 @@ import mining.KMeansMiner;
 import protocol.RequestMessage;
 import protocol.ResponseMessage;
 import server.MultiServer;
-// TODO ADD JAVADOC
+
+/**
+ * This class provides the read service implementation.
+ * The discover service could be broken in 3 main sub-activities:
+ * <ul>
+ *     <li> Build the dataset from database using {@link data.Data}
+ *     and {@link database.DbAccess}  classes</li>
+ *     <li> Deserialize the KMeansMiner instance from the fileSystem </li>
+ *     <li> build the client response </li>
+ * </ul>
+ * Note: as convention the file name is retrieved using client information
+ * encoded in the request message:
+ * <p>
+ *  {@code <request.table>_<request.clusters>.dmp}
+ * </p>
+ */
 public class ReadClustersService implements Service {
 
     public ResponseMessage execute(RequestMessage req) {

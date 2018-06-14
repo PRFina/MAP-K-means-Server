@@ -9,12 +9,34 @@ import server.MultiServer;
 import java.sql.SQLException;
 
 
-// TODO ADD JAVADOC
+/**
+ * This class provides the discover service implementation.
+ * The discover service could be broken in 4 main sub-activities:
+ * <ul>
+ *     <li> Build the dataset from database using {@link data.Data}
+ *     and {@link database.DbAccess}  classes</li>
+ *     <li> Mining the dataset trough {@link mining.KMeansMiner} </li>
+ *     <li> Serialize the KMeansMiner instance into the fileSystem </li>
+ *     <li> build the client response </li>
+ * </ul>
+ * Note: as convention the file name is stored using client information
+ * encoded in the request message:
+ * <p>
+ *     {@code <request.table>_<request.clusters>.dmp}
+ * </p>
+ */
 
 public class DiscoverService implements Service{
+    /**
+     *
+     * @param req RequestMessage instance injected as context for service computation
+     * @return the associated client response
+     */
     public ResponseMessage execute(RequestMessage req) {
+
         ResponseMessage resp = new ResponseMessage();
         resp.setResponseType(req.getRequestType());
+
         try{
             String tableName = req.getBodyField("table");
             int k = Integer.parseInt(req.getBodyField("clusters"));
@@ -36,14 +58,5 @@ public class DiscoverService implements Service{
         }
 
         return resp;
-    }
-
-
-    public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException, NoValueException {
-        DiscoverService disc = new DiscoverService();
-        RequestMessage req = new RequestMessage(MessageType.DISCOVER);
-        req.addBodyField("data", "to");
-        ResponseMessage resp = disc.execute(req);
-        System.out.println(resp);
     }
 }

@@ -4,7 +4,7 @@ import protocol.RequestMessage;
 import protocol.ResponseMessage;
 
 /**
- * This class provide the "default" service.
+ * This class provides the "default" service.
  * <p>An instance of this class is created when client
  * request a service not registered in the ServiceDispatcher.
  * </p>

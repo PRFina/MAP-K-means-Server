@@ -11,7 +11,7 @@ import java.net.Socket;
 
 /**
  *
- * This class model a multi-thread specific-purpose server.
+ * This class models a multi-thread specific-purpose server.
  *
  * The main component of the server are:
  * <ul>
@@ -24,7 +24,7 @@ import java.net.Socket;
  * dispatcher mechanism defined in {@link services.ServiceDispatcher} class.
  *
  *
- * @Author Pio Raffaele Fina
+ * @author Pio Raffaele Fina
  *
  */
 
@@ -40,7 +40,7 @@ public class MultiServer {
         serverPort = port;
         config = new ServerConfiguration( "config.properties");
         dispatcher = new ServiceDispatcher();
-        initDispatcher();
+        dispatcher.load(getConfig().getProperty("services_config_file"));
     }
 
     /**
@@ -69,18 +69,6 @@ public class MultiServer {
             Socket socket = srvSocket.accept();
             ServeOneClient client = new ServeOneClient(socket, dispatcher);
         }
-    }
-
-    /**
-     * Register service to the dispatcher.
-     * // TODO maybe replace with service.xml and reflection to register serivces in a declarative way
-     */
-    private void initDispatcher(){
-
-        // Service registration
-        dispatcher.register("READ", new ReadClustersService());
-        dispatcher.register("DISCOVER", new DiscoverService());
-
     }
 
     public static void main(String[] args) {
