@@ -12,25 +12,33 @@ import java.net.Socket;
 import protocol.ResponseMessage;
 import protocol.RequestMessage;
 import protocol.MessageType;
-
+import services.ServiceDispatcher;
 
 public class ServeOneClient extends Thread{
 
     Socket socket;
     ObjectInputStream in;
     ObjectOutputStream out;
-    KMeansMiner miner;
+    ServiceDispatcher dispatcher;
 
-    public ServeOneClient(Socket clientSocket) throws IOException {
-        this.socket = clientSocket;
-        this.in = new ObjectInputStream(this.socket.getInputStream());
-        this.out = new ObjectOutputStream(this.socket.getOutputStream());
+    public ServeOneClient(Socket clientSocket, ServiceDispatcher dispatcher) throws IOException {
+        socket = clientSocket;
+        in = new ObjectInputStream(this.socket.getInputStream());
+        out = new ObjectOutputStream(this.socket.getOutputStream());
+
+        this.dispatcher = dispatcher;
+
         this.start();
 
     }
 
     @Override
     public void run(){
+        /*
+            read the request, pass to the dispatcher,
+            call the right service and
+            return a response message to client.
+         */
         try {
             while(true){
 
@@ -39,39 +47,7 @@ public class ServeOneClient extends Thread{
                 RequestMessage req = (RequestMessage) in.readObject();
                 System.out.println(req); // DEBUG
 
-                ResponseMessage resp = new ResponseMessage();
-
-                switch (req.getRequestType()){
-                    case READ: {
-                        Service serv = new ReadClustersService(req.getBodyField("file"));
-
-                        resp.setResponseType(MessageType.READ);
-                        try {
-                            resp.addBodyField("data", serv.execute());
-                            resp.setStatus("OK");
-                        } catch (ServerException e) {
-                            resp.addBodyField("errorMsg", e.getMessage());
-                            resp.setStatus("ERROR");
-                        }
-
-                        break;
-                    }
-
-                    case DISCOVER: {
-                        resp.setResponseType(MessageType.DISCOVER);
-                        resp.addBodyField("data","data is received");
-                        resp.setStatus("OK");
-                        break;
-                    }
-
-                    case INFO: {
-                        resp.setResponseType(MessageType.INFO);
-                        resp.addBodyField("data","metadata about metadata that talk about data");
-                        resp.setStatus("OK");
-                        break;
-
-                    }
-                }
+                ResponseMessage  resp = dispatcher.dispatch(req);
 
                 out.writeObject(resp);
             }

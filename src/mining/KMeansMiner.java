@@ -68,4 +68,8 @@ public class KMeansMiner implements Serializable {
 		objStream.close();
 		fileStream.close();
 	}
+
+	public String toString(Data data){
+		return C.toString(data);
+	}
 }

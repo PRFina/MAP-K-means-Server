@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class model a message sent from client to server.
+ * The request message have 2 main section:
+ * -message type
+ * - message body
+ */
 public class RequestMessage implements Serializable {
 
     private MessageType type;

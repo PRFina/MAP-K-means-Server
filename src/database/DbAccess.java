@@ -9,9 +9,9 @@ public class DbAccess {
     final String DBMS = "jdbc:mysql";
     final String SERVER = "localhost";
     final String PORT = "3306";
-    final String DATABASE = "MapDB";
-    final String USER_ID = "MapUser";
-    final String PASSWORD = "map";
+    final String DATABASE = "map";
+    final String USER_ID = "root";
+    final String PASSWORD = "admin";
     Connection conn;
 
     public void initConnection() throws DatabaseConnectionException, ClassNotFoundException {

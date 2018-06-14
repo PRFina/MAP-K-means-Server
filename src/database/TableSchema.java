@@ -41,6 +41,7 @@ public class TableSchema {
         //http://java.sun.com/j2se/1.3/docs/guide/jdbc/getstart/mapping.html
         mapSQL_JAVATypes.put("CHAR", "string");
         mapSQL_JAVATypes.put("VARCHAR", "string");
+        mapSQL_JAVATypes.put("TEXT", "string");
         mapSQL_JAVATypes.put("LONGVARCHAR", "string");
         mapSQL_JAVATypes.put("BIT", "string");
         mapSQL_JAVATypes.put("SHORT", "number");

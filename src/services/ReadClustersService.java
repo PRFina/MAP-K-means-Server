@@ -1,8 +1,14 @@
 package services;
 
+import data.Data;
+import mining.KMeansMiner;
+import protocol.MessageType;
+import protocol.RequestMessage;
+import protocol.ResponseMessage;
 import server.MultiServer;
 import server.ServerException;
 
+import javax.xml.ws.Response;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -10,32 +16,27 @@ import java.io.IOException;
 
 public class ReadClustersService implements Service {
 
-    String fileName;
+    public ResponseMessage execute(RequestMessage req) {
+        String tableName = req.getBodyField("table");
 
-    public ReadClustersService(String fileName){
-        this.fileName = fileName;
+        ResponseMessage resp = new ResponseMessage();
+        resp.setResponseType(req.getRequestType());
+        try{
+            Data data = new Data(tableName);
+            String fileName = MultiServer.settings.getProperty("file_storage_root") + "/" + tableName + "_" + req.getBodyField("clusters") + ".dmp";
+            KMeansMiner miner = new KMeansMiner(fileName);
 
-    }
-
-    public String execute() throws ServerException {
-        //TODO remove dummy implementation
-        String filePath = MultiServer.settings.getProperty("file_storage_root") + "/" + fileName;
-        String out;
-
-        try (  BufferedReader in = new BufferedReader(new FileReader(filePath))){
-            out = in.readLine();
-        }catch (FileNotFoundException e){
-            throw new ServerException("Resource not available!");
-        }
-        catch (IOException e) {
-            throw new ServerException("Cannot handle the resources!");
+            resp.addBodyField("data", miner.toString(data));
+            resp.setStatus("OK");
+        }catch (Exception e){
+            resp.addBodyField("errorMsg", e.getMessage());
+            resp.setStatus("ERROR");
+            e.printStackTrace();
         }
 
 
-        // TODO add real implementation with kmeansMiner instance
 
-
-        return out;
+        return resp;
     }
 }
 
