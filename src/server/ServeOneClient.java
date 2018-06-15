@@ -1,9 +1,5 @@
 package server;
 
-import services.ReadClustersService;
-import services.Service;
-import mining.KMeansMiner;
-
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,14 +13,15 @@ import services.ServiceDispatcher;
 /**
  * - the main bridge communication with client, 1-1 direct channel with client
  */
-public class ServeOneClient extends Thread {
+public final class ServeOneClient extends Thread {
 
-    Socket socket;
-    ObjectInputStream in;
-    ObjectOutputStream out;
-    ServiceDispatcher dispatcher;
+    private Socket socket;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
+    private ServiceDispatcher dispatcher;
 
-    public ServeOneClient(Socket clientSocket, ServiceDispatcher dispatcher) throws IOException {
+    public ServeOneClient(final Socket clientSocket, final ServiceDispatcher dispatcher)
+            throws IOException {
         socket = clientSocket;
         in = new ObjectInputStream(this.socket.getInputStream());
         out = new ObjectOutputStream(this.socket.getOutputStream());

@@ -26,6 +26,8 @@ import java.sql.SQLException;
  * <p>
  * {@code <request.table>_<request.clusters>.dmp}
  * </p>
+ *
+ * @author Pio Raffaele Fina
  */
 
 public class DiscoverService implements Service {

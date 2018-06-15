@@ -27,7 +27,17 @@ import java.util.Map;
  * <a href="https://en.wikipedia.org/wiki/Command_pattern" >Command Pattern</a>
  * </p>
  *
+ * The service registration is handled in 2 main way:
+ * <ul>
+ *     <li> using load method: will register automatically all services declared in service.xml</li>
+ *     <li> using register method: will register the service passed as parameter</li>
+ * </ul>
  *
+ * <p>
+ *     The serviceDispatcher instance is shared among multiple threads since is injected
+ *     in serveOneClient constructor, to avoid synchronization problems, the dispatcher
+ *     is build as immutable object.
+ * </p>
  */
 public class ServiceDispatcher {
 
