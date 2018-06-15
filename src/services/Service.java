@@ -11,11 +11,11 @@ import protocol.ResponseMessage;
  * with no communication with other services or external components. A service
  * is in 1-1 relation with a client request.
  * </p>
- *
+ * <p>
  * The class that implements this interface must define the <tt>execute</tt> method
  */
 @FunctionalInterface
-public interface Service{
+public interface Service {
     /**
      * Encode the service computation logic. The response message is created in
      * the service based the request content

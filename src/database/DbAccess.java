@@ -31,10 +31,4 @@ public class DbAccess {
     Connection getConnection(){
         return conn;
     }
-
-
-    public static void main(String[] args) throws DatabaseConnectionException, ClassNotFoundException {
-        DbAccess db = new DbAccess();
-        db.initConnection();
-    }
 }

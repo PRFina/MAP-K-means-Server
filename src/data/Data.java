@@ -16,7 +16,7 @@ public class Data {
     private int numberOfExamples;
     private List<Attribute> explanatorySet;
 
-    public Data(String tableName) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException, NoValueException {
+    public Data(String tableName) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException {
         DbAccess db = new DbAccess();
         db.initConnection();
         TableData td = new TableData(db);
@@ -116,11 +116,11 @@ public class Data {
     }
 
     /**
-     * element wise tuple comparison. Given 2 index i,j check if tuple at index i and tuple at index j are equals.
+     * Given 2 index i,j check if tuple at index i and tuple at index j are equals.
      *
-     * @param i
-     * @param j
-     * @return
+     * @param i first tuple index
+     * @param j second tuple index
+     * @return true if tuples are element-wise equals, false otherwise.
      */
     private boolean compare(int i, int j) {
         boolean isTrue = true;

@@ -106,18 +106,4 @@ public class TableData {
 		}else
 			return resString;
 	}
-
-
-	public static void main(String[] args) throws SQLException, DatabaseConnectionException, ClassNotFoundException, NoValueException {
-		DbAccess db = new DbAccess();
-		db.initConnection();
-		TableData td = new TableData(db);
-		TableSchema ts = new TableSchema(db,"playtennis");
-
-
-		System.out.println(td.getAggregateColumnValue("playtennis", ts.getColumn(1), QUERY_TYPE.MIN));
-		System.out.println(td.getAggregateColumnValue("playtennis", ts.getColumn(1), QUERY_TYPE.MAX));
-	}
-	
-
 }

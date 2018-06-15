@@ -13,20 +13,22 @@ import java.util.Map;
 public class RequestMessage implements Serializable {
 
     private MessageType type;
-    private Map<String,String> body;
+    private Map<String, String> body;
 
     public RequestMessage(MessageType msgType) {
         this.type = msgType;
         body = new HashMap<>();
     }
 
-    public MessageType getRequestType(){return type;}
-
-    public void addBodyField(String key, String value){
-        body.put(key,value);
+    public MessageType getRequestType() {
+        return type;
     }
 
-    public String getBodyField(String fieldKey){
+    public void addBodyField(String key, String value) {
+        body.put(key, value);
+    }
+
+    public String getBodyField(String fieldKey) {
         return body.get(fieldKey);
     }
 

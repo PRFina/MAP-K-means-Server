@@ -7,6 +7,8 @@ import org.xml.sax.SAXException;
 
 import protocol.RequestMessage;
 import protocol.ResponseMessage;
+import server.MultiServer;
+import server.ServerException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,9 +73,8 @@ public class ServiceDispatcher {
      * @param req requestMessage object sent from client
      * @return responseMessage object associated with the service execution
      */
-    public ResponseMessage dispatch(RequestMessage req){
+    public ResponseMessage dispatch(RequestMessage req) {
         Service service = getService(req.getRequestType().name());
-        System.out.println(service);
         return service.execute(req);
     }
 
@@ -84,12 +85,15 @@ public class ServiceDispatcher {
      * mechanism
      * @param fileName the name of the file to be parsed
      */
-    public void load(String fileName){
+    public void load(String fileName) throws ServerException {
         try {
             Document doc = DocumentBuilderFactory
                     .newInstance()
                     .newDocumentBuilder()
-                    .parse(new FileInputStream("services.xml"));
+                    .parse(new FileInputStream(MultiServer
+                            .getConfig()
+                            .getProperty("services_config_file")));
+
             NodeList services = doc.getElementsByTagName("service");
 
             for (int i = 0; i < services.getLength(); i++) {
@@ -103,20 +107,10 @@ public class ServiceDispatcher {
                 register(name, service);
 
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException | IOException | SAXException |
+                IllegalAccessException | InstantiationException |
+                ClassNotFoundException e) {
+            throw new ServerException("Server setup error: can't load services");
         }
     }
 }
