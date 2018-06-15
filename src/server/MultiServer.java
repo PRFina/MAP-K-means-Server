@@ -28,7 +28,7 @@ public class MultiServer {
     private ServiceDispatcher dispatcher;
 
     public MultiServer() throws ServerException{
-        config = new ServerConfiguration("resources/config.properties");
+        config = new ServerConfiguration("config.properties");
         serverPort = Integer.parseInt( config.getProperty("server_port"));
 
         dispatcher = new ServiceDispatcher();
@@ -45,7 +45,7 @@ public class MultiServer {
     public static ServerConfiguration getConfig() throws ServerException {
 
         if (config == null) {
-            config = new ServerConfiguration("resources/config.properties");
+            config = new ServerConfiguration("config.properties");
             return config;
         } else
             return config;

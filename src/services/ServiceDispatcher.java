@@ -96,13 +96,12 @@ public class ServiceDispatcher {
      * @param fileName the name of the file to be parsed
      */
     public void load(String fileName) throws ServerException {
-        try {
+        try(InputStream in = getClass().getClassLoader().getResourceAsStream(fileName)){
+
             Document doc = DocumentBuilderFactory
                     .newInstance()
                     .newDocumentBuilder()
-                    .parse(new FileInputStream(MultiServer
-                            .getConfig()
-                            .getProperty("services_config_file")));
+                    .parse(in);
 
             NodeList services = doc.getElementsByTagName("service");
 

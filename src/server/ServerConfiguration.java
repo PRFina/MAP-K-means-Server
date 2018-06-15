@@ -3,6 +3,7 @@ package server;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class ServerConfiguration {
@@ -13,7 +14,7 @@ public class ServerConfiguration {
     ServerConfiguration(String fileName) throws ServerException{
         configFileName = fileName;
 
-        try (FileInputStream in = new FileInputStream(configFileName)) {
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream(configFileName)) {
             config = new Properties();
             config.load(in);
         } catch (IOException e) {
