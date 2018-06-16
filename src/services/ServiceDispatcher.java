@@ -7,7 +7,6 @@ import org.xml.sax.SAXException;
 
 import protocol.RequestMessage;
 import protocol.ResponseMessage;
-import server.MultiServer;
 import server.ServerException;
 
 import java.util.HashMap;

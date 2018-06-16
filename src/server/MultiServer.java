@@ -5,6 +5,7 @@ import services.ServiceDispatcher;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 /**
  * This class models a multi-thread specific-purpose server.
@@ -24,17 +25,20 @@ import java.net.Socket;
 
 public class MultiServer {
     private static ServerConfiguration config;
-    int serverPort;
+    private int serverPort;
     private ServiceDispatcher dispatcher;
+    private ServerLogger logger;
 
     public MultiServer() throws ServerException{
         config = new ServerConfiguration("config.properties");
+        config.initStorageFolder();
+
         serverPort = Integer.parseInt( config.getProperty("server_port"));
 
         dispatcher = new ServiceDispatcher();
         dispatcher.load(getConfig().getProperty("services_config_file"));
 
-        config.initStorageFolder();
+        logger = new ServerLogger();
     }
 
     /**
@@ -63,7 +67,7 @@ public class MultiServer {
 
         while (true) {
             Socket socket = srvSocket.accept();
-            ServeOneClient client = new ServeOneClient(socket, dispatcher);
+            ServeOneClient client = new ServeOneClient(socket, dispatcher, logger);
         }
     }
 

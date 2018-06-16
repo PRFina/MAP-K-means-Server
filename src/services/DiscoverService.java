@@ -1,15 +1,11 @@
 package services;
 
 import data.Data;
-import database.*;
+
 import mining.KMeansMiner;
-import protocol.MessageType;
 import protocol.RequestMessage;
 import protocol.ResponseMessage;
 import server.MultiServer;
-
-import java.sql.SQLException;
-
 
 /**
  * This class provides the discover service implementation.

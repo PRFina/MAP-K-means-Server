@@ -19,14 +19,16 @@ public final class ServeOneClient extends Thread {
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private ServiceDispatcher dispatcher;
+    private ServerLogger logger;
 
-    public ServeOneClient(final Socket clientSocket, final ServiceDispatcher dispatcher)
+    public ServeOneClient(final Socket clientSocket, final ServiceDispatcher dispatcher, final ServerLogger logger)
             throws IOException {
         socket = clientSocket;
         in = new ObjectInputStream(this.socket.getInputStream());
         out = new ObjectOutputStream(this.socket.getOutputStream());
 
         this.dispatcher = dispatcher;
+        this.logger = logger;
 
         this.start();
 
@@ -39,16 +41,15 @@ public final class ServeOneClient extends Thread {
             call the right service and
             return a response message to client.
          */
-        System.out.println(socket);
+        logger.log("Start connection with:" + socket.getInetAddress().getHostAddress());
         try {
             while (true) {
                 RequestMessage req = (RequestMessage) in.readObject();
-                //TODO replace with logger: disconnect
-                System.out.println(req); // DEBUG
-
                 ResponseMessage resp = dispatcher.dispatch(req);
 
                 out.writeObject(resp);
+
+                logger.logConnection(socket, req, resp);
             }
 
         } catch (EOFException e) {
@@ -59,6 +60,7 @@ public final class ServeOneClient extends Thread {
             e.printStackTrace();
         } finally {
             try {
+                logger.log("Start connection with:" + socket.getInetAddress().getHostAddress());
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
