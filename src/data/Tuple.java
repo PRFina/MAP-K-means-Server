@@ -5,38 +5,58 @@ import java.util.Arrays;
 import java.util.Set;
 
 /**
- * 
- * @author Pio Raffaele Fina
+ * This class represents implementation of tuple like array of items.
  *
+ * @author Pio Raffaele Fina
+ * @version 1.0
  */
 public class Tuple implements Serializable {
 	
 	private Item[] tuple;
-	
+
+	/**
+	 * Construct an instance of tuple.
+	 * @param size
+	 */
 	Tuple(int size){
-		
 		tuple = new Item[size];
 	}
-	
+
+	/**
+	 * Getter of the tuple length.
+	 *
+	 * @return tuple length
+	 */
 	public int getLength() {
 		return tuple.length;
 	}
-	
+
+	/**
+	 * Getter of the i-th element of tuple.
+	 *
+	 * @param i
+	 * @return i-th element of tuple
+	 */
 	public Item get(int i) {
 		return tuple[i];
 	}
-	
+
+	/**
+	 * Add a specified item in specified position of array
+	 * @param c item
+	 * @param i position
+	 */
 	void add(Item c, int i) {
 		// if (i < this.getLength())
 			tuple[i] = c;
 	}
 
     /**
-     *
+     * Calculate distance between two tuples by sum of element-to-element distance
+	 *
      * @param obj
-     * @return
+     * @return distance between two tuples
      */
-	
 	public double getDistance(Tuple obj) {
 		double sum = 0.0;
 		for (int i = 0; i < tuple.length; i++) {
@@ -45,7 +65,14 @@ public class Tuple implements Serializable {
 		
 		return sum;
 	}
-	
+
+	/**
+	 * Calculate average distance between transactions indexed in clusteredData set
+	 *
+	 * @param data
+	 * @param clusteredData
+	 * @return average distance
+	 */
 	public double avgDistance(Data data, Set<Integer> clusteredData) {
 		double sum = 0.0, avg = 0.0;
 

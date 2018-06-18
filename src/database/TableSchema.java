@@ -8,21 +8,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Models table schema of a table in DB.
+ *
+ * @author Simone Cicerello
+ * @version 1.0
+ *
+ */
 public class TableSchema {
+
+    /**
+     * Inner class that models attribute.
+     */
     public class Column {
         private String name;
         private String type;
 
+        /**
+         * Create an instance of the column.
+         *
+         * @param name attribute name
+         * @param type type name
+         */
         Column(String name, String type) {
             this.name = name;
             this.type = type;
         }
 
+        /**
+         * Gets column name
+         * @return name
+         */
         public String getColumnName() {
             return name;
         }
 
+        /**
+         * Checks if column type is numeric, return true if it is, false otherwise.
+         *
+         * @return boolean value
+         */
         public boolean isNumber() {
             return type.equals("number");
         }
@@ -35,6 +60,13 @@ public class TableSchema {
     DbAccess db;
     List<Column> tableSchema = new ArrayList<>();
 
+    /**
+     * Create an instance of TableSchema following the mapped types.
+     *
+     * @param db access
+     * @param tableName name
+     * @throws SQLException
+     */
     public TableSchema(DbAccess db, String tableName) throws SQLException {
         this.db = db;
         HashMap<String, String> mapSQL_JAVATypes = new HashMap<>();
@@ -49,7 +81,6 @@ public class TableSchema {
         mapSQL_JAVATypes.put("LONG", "number");
         mapSQL_JAVATypes.put("FLOAT", "number");
         mapSQL_JAVATypes.put("DOUBLE", "number");
-
 
         Connection con = db.getConnection();
         DatabaseMetaData meta = con.getMetaData();
@@ -70,6 +101,12 @@ public class TableSchema {
         return tableSchema.size();
     }
 
+    /**
+     * Gets column by related index
+     *
+     * @param index
+     * @return column looked for
+     */
     public Column getColumn(int index) {
         return tableSchema.get(index);
     }

@@ -3,9 +3,9 @@ package data;
 import java.io.Serializable;
 
 /**
- * This class represent the base structure for an attribute object, since the class is abstract it can't be instantiated.
+ * Class that represents the base structure for an attribute object.
  * 
- * @author prf
+ * @author Simone Cicerello
  * @version 1.0
  *
  */
@@ -15,8 +15,8 @@ abstract class Attribute implements Serializable {
 	private int index;
 	/**
 	 * Construct an instance of an attribute.
-	 * @param name name of the attribute
-	 * @param index  index of the attribute
+	 * @param name attribute name
+	 * @param index attribute index
 	 */
 	Attribute(String name, int index) {
 		this.name = name;
@@ -24,7 +24,7 @@ abstract class Attribute implements Serializable {
 	}
 	/**
 	 * Getter for the attribute name.
-	 * @return name of the attribute
+	 * @return attribute name
 	 */
 	String getName() {
 		return name;

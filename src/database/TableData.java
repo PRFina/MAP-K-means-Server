@@ -12,16 +12,34 @@ import java.util.TreeSet;
 
 import database.TableSchema.Column;
 
+/**
+ * Class that models and interrogate data table through its services.
+ *
+ * @author Simone Cicerello
+ * @version 1.0
+ */
 
 public class TableData {
 
 	DbAccess db;
 
-	
+	/**
+	 * Constructs an instance of the table data to be modeled.
+	 *
+	 * @param db access to DB
+	 */
 	public TableData(DbAccess db) {
 		this.db=db;
 	}
 
+	/**
+	 * Interrogates data table getting list of distinct values (no duplicate values).
+	 *
+	 * @param table name
+	 * @return list of results
+	 * @throws SQLException
+	 * @throws EmptySetException
+	 */
 	public List<Example> getDistinctTransactions(String table) throws SQLException, EmptySetException{
 		List<Example> exampleList = new ArrayList<>();
 		Connection conn = db.getConnection();
@@ -50,7 +68,14 @@ public class TableData {
 		return exampleList;
 	}
 
-
+	/**
+	 * Interrogates data table getting list of distinct values of a selected attribute, ordered by ascending mode.
+	 *
+	 * @param table name
+	 * @param column attribute
+	 * @return list of results
+	 * @throws SQLException
+	 */
 	public  Set<Object>getDistinctColumnValues(String table, Column column) throws SQLException{
 		Set<Object> attributeValues = new TreeSet<>();
 
@@ -76,6 +101,15 @@ public class TableData {
 
 	}
 
+	/**
+	 * Interrogates data table getting value obtained from chosen operations on a selected attribute.
+	 *
+	 * @param table name
+	 * @param column attribute
+	 * @param aggregate choose type of operation (min/max)
+	 * @return
+	 * @throws SQLException
+	 */
 	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException {
 		Statement stmt = db.getConnection().createStatement();
 		String columnName = column.getColumnName();

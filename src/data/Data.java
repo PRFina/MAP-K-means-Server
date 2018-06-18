@@ -7,8 +7,11 @@ import database.*;
 
 
 /**
- * @author prf
- * This class model a tabular view of transactions
+ * This class models a tabular view of transactions with header and data fields. The elements of table are accessible
+ * through related indexes of lists that models header and fields, taking appropriate values.
+ *
+ * @author Pio Raffaele Fina
+ * @version 1.0
  */
 
 public class Data {
@@ -16,6 +19,15 @@ public class Data {
     private int numberOfExamples;
     private List<Attribute> explanatorySet;
 
+    /**
+     * Construct an instance of Data table by calling the related database table.
+     *
+     * @param tableName name of database table that will be builds
+     * @throws SQLException
+     * @throws DatabaseConnectionException
+     * @throws ClassNotFoundException
+     * @throws EmptySetException
+     */
     public Data(String tableName) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException {
         DbAccess db = new DbAccess();
         db.initConnection();
@@ -43,22 +55,51 @@ public class Data {
         db.closeConnection();
     }
 
+    /**
+     * Getter of the number of examples.
+     *
+     * @return number of examples
+     */
     public int getNumberOfExamples() {
         return this.numberOfExamples;
     }
 
+    /**
+     * Getter of the number of attributes.
+     *
+     * @return number of attributes
+     */
     public int getNumberOfAttributes() {
         return this.explanatorySet.size();
     }
 
+    /**
+     * Getter of the values of element identifieds by row (tuples) and col (attribute) indexes.
+     *
+     * @param exampleIndex tuples index
+     * @param attributeIndex attribute index
+     * @return element value looked for
+     */
     public Object getAttributeValue(int exampleIndex, int attributeIndex) {
         return this.data.get(exampleIndex).get(attributeIndex);
     }
 
+    /**
+     * Getter of the attribute by index
+     *
+     * @param index
+     * @return attribute looked for
+     */
     public Attribute getAttribute(int index) {
         return this.explanatorySet.get(index);
     }
 
+    /**
+     * Getter of the tuple by index
+     *
+     * @param index
+     * @return tuple looked for
+     */
     public Tuple getItemSet(int index) {
         //TODO uniformare  i costruttori di cont e discr attribute per eliminare i cast
 
@@ -159,6 +200,13 @@ public class Data {
 
     }
 
+    /**
+     * Dispatch type of attribute using RTTI
+     *
+     * @param idList
+     * @param attribute
+     * @return calls to compute prototype with right parameter
+     */
     Object computePrototype(Set<Integer> idList, Attribute attribute) {
         if (attribute instanceof DiscreteAttribute)
             return computePrototype(idList, (DiscreteAttribute) attribute);
@@ -167,13 +215,12 @@ public class Data {
     }
 
     /**
-     * Return the most frequent attribute's value in tuples indexed by idList
+     * Return the most frequent Discrete attribute's value in tuples indexed by idList
      *
      * @param idList
-     * @param attribute
+     * @param attribute Discrete attribute
      * @return
      */
-
     String computePrototype(Set<Integer> idList, DiscreteAttribute attribute) {
         Iterator<String> it = attribute.iterator();
 
@@ -193,6 +240,13 @@ public class Data {
         return maxValue;
     }
 
+    /**
+     * Return the most frequent Continuous attribute's value in tuples indexed by idList
+     *
+     * @param idList
+     * @param attribute Continuous attribute
+     * @return
+     */
     Double computePrototype(Set<Integer> idList, ContinuousAttribute attribute) {
         Double sum = 0.0;
         for (Integer i : idList) {

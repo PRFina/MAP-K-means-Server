@@ -1,6 +1,7 @@
 package data;
 /**
- * This class provide an implementation of a continuous attribute type, eg. weight, length, temperature values.
+ * This class provide an implementation of a Continuous Attribute type (eg. weight, length, temperature values).
+ *
  * @author Pio Raffaele Fina
  * @version 1.0
  *
@@ -12,6 +13,7 @@ class ContinuousAttribute extends Attribute {
 
 	/**
 	 * Construct an instance of a continuous attribute.
+	 *
 	 * @param name name of the attribute.
 	 * @param index index of the attribute.
 	 * @param min minimum value of the attribute.
@@ -24,6 +26,7 @@ class ContinuousAttribute extends Attribute {
 	}
 	/**
 	 * Normalize the value using min-max normalization
+	 *
 	 * @param v value to normalized.
 	 * @return normalized v.
 	 */

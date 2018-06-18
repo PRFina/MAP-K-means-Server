@@ -6,7 +6,9 @@ import java.util.TreeSet;
 import java.lang.Iterable;
 
 /**
- * This class provide an implementation of a discrete attribute type, categorical data like blood type, music genres, days of the week.
+ * This class provide an implementation of a discrete attribute type (eg. categorical data like blood type,
+ * music genres, days of the week).
+ *
  * @author Pio Raffaele Fina
  * @version 1.0
  *
@@ -29,6 +31,7 @@ public class DiscreteAttribute extends Attribute implements Iterable<String> {
 
 	/**
 	 * Get the values number that attribute can assume.
+	 *
 	 * @return the number of all attribute values
 	 */
 	int getNumberOfDistinctValues() {
@@ -37,10 +40,11 @@ public class DiscreteAttribute extends Attribute implements Iterable<String> {
 
 
 	/**
-	 * Get the number of occurrences of v in the Data's row indexed by idList 
-	 * @param data
-	 * @param idList
-	 * @param v
+	 * Get the number of occurrences of v in the Data's row indexed by idList.
+	 *
+	 * @param data represents a tabular view of transactions
+	 * @param idList list of tuples indexes
+	 * @param v the value of which the occurrences are to be looked for
 	 * @return
 	 */
 	int frequency(Data data, Set<Integer> idList, String v) {
