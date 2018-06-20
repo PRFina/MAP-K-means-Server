@@ -36,7 +36,8 @@ abstract class Attribute implements Serializable {
 	int getIndex() {
 		return index;
 	}
-	
+
+	@Override
 	public String toString() {
 		return this.name;
 	}

@@ -95,6 +95,17 @@ public class Data {
     }
 
     /**
+     * Get attribute name
+     *
+     * @param index the attribute index
+     * @return attribute looked for
+     */
+    public String getAttributeName(int index) {
+        return this.explanatorySet.get(index).getName();
+    }
+
+
+    /**
      * Getter of the tuple by index
      *
      * @param index

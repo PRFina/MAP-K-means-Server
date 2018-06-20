@@ -1,9 +1,13 @@
 package mining;
 
-import data.Data;
-import data.Tuple;
+import data.*;
+import database.DatabaseConnectionException;
+import database.EmptySetException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -109,5 +113,51 @@ public class Cluster implements Serializable {
 		out.append("-----AvgDistance="+this.centroid.avgDistance(data, clusteredData)+"-----\n\n");
 
 		return out.toString();
+	}
+
+	JSONObject toJson(Data data){
+		JSONObject clusterObj = new JSONObject();
+
+		// Build centroid object
+		JSONArray centroid = new JSONArray();
+		for (int i = 0; i < this.centroid.getLength(); i++) {
+			centroid.add(this.centroid.get(i).toString());
+		}
+		clusterObj.put("centroid", centroid);
+
+
+		//Build examples array
+		JSONArray examples = new JSONArray();
+		for(int i: clusteredData){
+			JSONObject example = new JSONObject();
+
+			//Build single example
+			JSONArray values = new JSONArray();
+			for (int j = 0; j < data.getItemSet(i).getLength(); j++) {
+				values.add(data.getItemSet(i).get(j).toString());
+			}
+
+			example.put("values", values);
+			example.put("distance", this.centroid.getDistance(data.getItemSet(i)));
+
+			examples.add(example);
+
+		}
+
+		clusterObj.put("examples", examples);
+
+		clusterObj.put("avg_distance", this.centroid.avgDistance(data,clusteredData));
+
+
+		return clusterObj;
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, EmptySetException, DatabaseConnectionException, OutOfRangeSampleSize {
+		Data d = new Data("iris");
+
+		KMeansMiner km = new KMeansMiner(15);
+		km.kmeans(d);
+		System.out.println(km.toString(d));
+		System.out.println(km.toJson(d));
 	}
 }

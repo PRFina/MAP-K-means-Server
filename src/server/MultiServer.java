@@ -30,14 +30,17 @@ public class MultiServer {
     private ServerLogger logger;
 
     public MultiServer() throws ServerException{
+        System.out.println("Init: configuration file...");
         config = new ServerConfiguration("config.properties");
         config.initStorageFolder();
 
         serverPort = Integer.parseInt( config.getProperty("server_port"));
 
+        System.out.println("Init: services...");
         dispatcher = new ServiceDispatcher();
         dispatcher.load(getConfig().getProperty("services_config_file"));
 
+        System.out.println("Init: logger...");
         logger = new ServerLogger();
     }
 
@@ -62,9 +65,9 @@ public class MultiServer {
      * @throws IOException
      */
     void start() throws IOException {
-
+        System.out.println("Init: network binding...");
         ServerSocket srvSocket = new ServerSocket(this.serverPort);
-
+        System.out.println("Server started!");
         while (true) {
             Socket socket = srvSocket.accept();
             ServeOneClient client = new ServeOneClient(socket, dispatcher, logger);

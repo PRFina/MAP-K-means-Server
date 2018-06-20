@@ -1,8 +1,16 @@
 package mining;
+
 import data.Data;
+import data.Item;
 import data.OutOfRangeSampleSize;
+import data.Tuple;
+import database.DatabaseConnectionException;
+import database.EmptySetException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.*;
+import java.sql.SQLException;
 
 /**
  * Class that represents the action of "Mining" on a data table with KMeans algorithm, choosing number of clusters.
@@ -110,5 +118,21 @@ public class KMeansMiner implements Serializable {
 
 	public String toString(Data data){
 		return C.toString(data);
+	}
+
+	public String toJson(Data data){
+		JSONArray tableHeader = new JSONArray();
+		for (int i = 0; i < data.getNumberOfAttributes() ; i++) {
+			tableHeader.add(data.getAttributeName(i));
+
+		}
+
+		JSONObject mainObj = new JSONObject();
+		mainObj.put("table_header",tableHeader);
+		mainObj.put("k", C.getSize());
+		mainObj.put("clusters", C.toJson(data));
+
+
+		return mainObj.toJSONString();
 	}
 }

@@ -2,6 +2,7 @@ package mining;
 import data.Data;
 import data.OutOfRangeSampleSize;
 import data.Tuple;
+import org.json.simple.JSONArray;
 
 import java.io.Serializable;
 
@@ -45,6 +46,12 @@ public class ClusterSet implements Serializable {
 	Cluster get(int i) {
 		return C[i];
 	}
+
+	/**
+	 * Get the clusters number in the cluster-set
+	 * @return the clusters number in the cluster-set
+	 */
+	int getSize(){return i;}
 
 	/**
 	 * Constructs the first set of centroids, using random function.
@@ -123,5 +130,17 @@ public class ClusterSet implements Serializable {
 			}
 		}
 		return out;
+	}
+
+	 JSONArray toJson(Data data){
+		JSONArray clusters = new JSONArray();
+
+		for(int i = 0; i < C.length; i++){
+			if (C[i]!=null){
+				clusters.add(C[i].toJson(data));
+			}
+		}
+
+		return clusters;
 	}
 }

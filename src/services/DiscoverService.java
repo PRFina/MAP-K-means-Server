@@ -35,7 +35,6 @@ public class DiscoverService implements Service {
 
         ResponseMessage resp = new ResponseMessage();
         resp.setResponseType(req.getRequestType());
-
         try {
             String tableName = req.getBodyField("table");
             int k = Integer.parseInt(req.getBodyField("clusters"));
@@ -45,7 +44,12 @@ public class DiscoverService implements Service {
             mineDB.kmeans(data);
 
             resp.setStatus("OK");
-            resp.addBodyField("data", mineDB.toString(data));
+            if("true".equals(req.getBodyField("sendJson"))) {
+                resp.addBodyField("data", mineDB.toJson(data));
+            }
+            else{
+                resp.addBodyField("data", mineDB.toString(data));
+            }
 
             String filePath = MultiServer.getConfig().getProperty("file_storage_root") + "/" + tableName + "_" + k + ".dmp";
             mineDB.salva(filePath);

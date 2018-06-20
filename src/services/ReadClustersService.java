@@ -39,7 +39,12 @@ public class ReadClustersService implements Service {
 
             KMeansMiner miner = new KMeansMiner(fileName);
 
-            resp.addBodyField("data", miner.toString(data));
+            if("true".equals(req.getBodyField("sendJson"))) {
+                resp.addBodyField("data", miner.toJson(data));
+            }
+            else{
+                resp.addBodyField("data", miner.toString(data));
+            }
             resp.setStatus("OK");
         } catch (Exception e) {
             resp.addBodyField("errorMsg", e.getMessage());
