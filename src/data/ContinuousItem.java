@@ -1,6 +1,12 @@
 package data;
 
+import database.DatabaseConnectionException;
+import database.EmptySetException;
+import mining.KMeansMiner;
+
 import java.lang.Math;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 /**
  * This class provide an implementation of a Contonuous Item type (eg. for Attribute type "temperature", value can be
@@ -11,6 +17,7 @@ import java.lang.Math;
  */
 public class ContinuousItem extends Item {
 
+    private static DecimalFormat df2 = new DecimalFormat(".##"); // needed for string formatting
     /**
      * Construct a continuous item.
      *
@@ -32,5 +39,11 @@ public class ContinuousItem extends Item {
         double val1 = ((ContinuousAttribute)this.getAttribute()).getScaledValues((Double)this.getValue());
         double val2 = ((ContinuousAttribute)this.getAttribute()).getScaledValues((Double)(a));
         return Math.abs(val1-val2);
+    }
+
+    @Override
+    public String toString() {
+
+        return df2.format(getValue());
     }
 }

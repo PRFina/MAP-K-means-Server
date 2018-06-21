@@ -50,6 +50,10 @@ public final class ServeOneClient extends Thread {
                 out.writeObject(resp);
 
                 logger.logConnection(socket, req, resp);
+
+                System.out.println(req); // DEBUG
+                System.out.println(resp); // DEBUG
+
             }
 
         } catch (EOFException e) {
