@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
  */
 public class ContinuousItem extends Item {
 
-    private static DecimalFormat df2 = new DecimalFormat(".##"); // needed for string formatting
+    private static DecimalFormat df2 = new DecimalFormat("###,###.##"); // needed for string formatting
     /**
      * Construct a continuous item.
      *
