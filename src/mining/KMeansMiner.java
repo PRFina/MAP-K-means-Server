@@ -129,7 +129,6 @@ public class KMeansMiner implements Serializable {
 
 		JSONObject mainObj = new JSONObject();
 		mainObj.put("table_header",tableHeader);
-		mainObj.put("k", C.getSize());
 		mainObj.put("clusters", C.toJson(data));
 
 

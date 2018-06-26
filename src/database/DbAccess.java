@@ -12,14 +12,14 @@ import java.sql.SQLException;
  */
 
 public class DbAccess {
-    final String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
-    final String DBMS = "jdbc:mysql";
-    final String SERVER = "localhost";
-    final String PORT = "3306";
-    final String DATABASE = "map";
-    final String USER_ID = "root";
-    final String PASSWORD = "admin";
-    Connection conn;
+    final private String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
+    final private String DBMS = "jdbc:mysql";
+    final private String SERVER = "localhost";
+    final private String PORT = "3306";
+    final private String DATABASE = "map";
+    final private String USER_ID = "root";
+    final private String PASSWORD = "admin";
+    private Connection conn;
 
     /**
      * Establishes connection to DB using url string that contains parameters like url and user credentials.
