@@ -1,5 +1,7 @@
 package database;
 
+import server.MultiServer;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,12 +15,13 @@ import java.sql.SQLException;
 
 public class DbAccess {
     final private String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
-    final private String DBMS = "jdbc:mysql";
-    final private String SERVER = "localhost";
-    final private String PORT = "3306";
-    final private String DATABASE = "map";
-    final private String USER_ID = "root";
-    final private String PASSWORD = "admin";
+    final private String DBMS = MultiServer.getConfig().getProperty("db_driver");
+    final private String SERVER = MultiServer.getConfig().getProperty("db_server");
+    final private String PORT = MultiServer.getConfig().getProperty("db_port");
+    final private String DATABASE = MultiServer.getConfig().getProperty("db_name");
+    final private String USER_ID = MultiServer.getConfig().getProperty("db_user");
+    final private String PASSWORD = MultiServer.getConfig().getProperty("db_pass");
+
     private Connection conn;
 
     /**

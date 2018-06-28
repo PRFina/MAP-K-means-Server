@@ -48,31 +48,16 @@ public class MultiServer {
         System.out.print("Init: logger...");
         logger = new ServerLogger();
         System.out.println("done!");
+
     }
 
     /**
      * Return a ServerConfiguration object, the object is instantiated in place if not already.
-     *
+     * This method help to implement the Singleton pattern
      * @return a ServerConfiguration object
      */
-    public static ServerConfiguration getConfig() throws ServerException {
-
-        if (config == null) {
-            config = new ServerConfiguration("config.properties");
+    public static ServerConfiguration getConfig() {
             return config;
-        } else
-            return config;
-    }
-
-    public static void main(String[] args) {
-        try {
-            MultiServer server = new MultiServer();
-            server.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ServerException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -90,6 +75,17 @@ public class MultiServer {
         while (true) {
             Socket socket = srvSocket.accept();
             ServeOneClient client = new ServeOneClient(socket, dispatcher, logger);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            MultiServer server = new MultiServer();
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServerException e) {
+            e.printStackTrace();
         }
     }
 
