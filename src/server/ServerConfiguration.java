@@ -1,11 +1,16 @@
 package server;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Properties;
 
+/**
+ * Load server configuration file.
+ *
+ * load try to load a custom config.property file if fail
+ * load the default one deployed in the jar
+ *
+ * the custom.property file must be located in working directory
+ */
 public class ServerConfiguration {
 
     private Properties config;
@@ -14,11 +19,23 @@ public class ServerConfiguration {
     ServerConfiguration(String fileName) throws ServerException{
         configFileName = fileName;
 
-        try (InputStream in = getClass().getClassLoader().getResourceAsStream(configFileName)) {
+        //Try to load custom config file
+        try(FileInputStream customPropFile = new FileInputStream(fileName)){
+
             config = new Properties();
-            config.load(in);
-        } catch (IOException e) {
-            throw new ServerException("Server setup error: can't load configuration file");
+            config.load(customPropFile);
+
+        } catch (FileNotFoundException e) {
+            // Try to load default config file
+            try (InputStream in = getClass().getClassLoader().getResourceAsStream(configFileName)) {
+                config = new Properties();
+                config.load(in);
+            } catch (IOException e1) {
+                throw new ServerException("Server setup error: can't load default configuration file");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

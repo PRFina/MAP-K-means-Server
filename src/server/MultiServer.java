@@ -5,7 +5,6 @@ import services.ServiceDispatcher;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Logger;
 
 /**
  * This class models a multi-thread specific-purpose server.
@@ -29,19 +28,26 @@ public class MultiServer {
     private ServiceDispatcher dispatcher;
     private ServerLogger logger;
 
-    public MultiServer() throws ServerException{
-        System.out.println("Init: configuration file...");
+    public MultiServer() throws ServerException {
+
+        System.out.print("Init: configuration file... ");
         config = new ServerConfiguration("config.properties");
+        System.out.println("done!");
+
+        System.out.print("Init: storage folder... ");
         config.initStorageFolder();
+        System.out.println("done!");
 
-        serverPort = Integer.parseInt( config.getProperty("server_port"));
+        serverPort = Integer.parseInt(config.getProperty("server_port"));
 
-        System.out.println("Init: services...");
+        System.out.print("Init: services...");
         dispatcher = new ServiceDispatcher();
         dispatcher.load(getConfig().getProperty("services_config_file"));
+        System.out.println("done!");
 
-        System.out.println("Init: logger...");
+        System.out.print("Init: logger...");
         logger = new ServerLogger();
+        System.out.println("done!");
     }
 
     /**
@@ -58,23 +64,6 @@ public class MultiServer {
             return config;
     }
 
-    /**
-     * Start the server main activity.
-     * Dispatch new thread to handle client connection.
-     *
-     * @throws IOException
-     */
-    void start() throws IOException {
-        System.out.println("Init: network binding...");
-        ServerSocket srvSocket = new ServerSocket(this.serverPort);
-        System.out.println("Server started!");
-        while (true) {
-            Socket socket = srvSocket.accept();
-            ServeOneClient client = new ServeOneClient(socket, dispatcher, logger);
-        }
-    }
-
-
     public static void main(String[] args) {
         try {
             MultiServer server = new MultiServer();
@@ -83,6 +72,24 @@ public class MultiServer {
             e.printStackTrace();
         } catch (ServerException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Start the server main activity.
+     * Dispatch new thread to handle client connection.
+     *
+     * @throws IOException
+     */
+    void start() throws IOException {
+        System.out.print("Init: network binding...");
+        ServerSocket srvSocket = new ServerSocket(this.serverPort);
+        System.out.println("done!");
+
+        System.out.println("Server started on port " + serverPort + "!");
+        while (true) {
+            Socket socket = srvSocket.accept();
+            ServeOneClient client = new ServeOneClient(socket, dispatcher, logger);
         }
     }
 
