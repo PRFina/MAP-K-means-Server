@@ -6,5 +6,5 @@ package database;
  * MAX - to get tuples containing the maximum value of a given attribute
  */
 public enum QUERY_TYPE {
-	MIN, MAX
+    MIN, MAX
 }

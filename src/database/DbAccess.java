@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 
 public class DbAccess {
-    final private String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
+
     final private String DBMS = MultiServer.getConfig().getProperty("db_driver");
     final private String SERVER = MultiServer.getConfig().getProperty("db_server");
     final private String PORT = MultiServer.getConfig().getProperty("db_port");
@@ -30,13 +30,13 @@ public class DbAccess {
      * @throws DatabaseConnectionException
      * @throws ClassNotFoundException
      */
-    public void initConnection() throws DatabaseConnectionException, ClassNotFoundException {
-        Class.forName(DRIVER_CLASS_NAME);
-        String url = DBMS+"://" + SERVER + ":" + PORT + "/" + DATABASE;
-        try{
+    public void initConnection() throws DatabaseConnectionException {
+
+        String url = DBMS + "://" + SERVER + ":" + PORT + "/" + DATABASE;
+        try {
             conn = DriverManager.getConnection(url, USER_ID, PASSWORD);
-        }catch (SQLException e){
-            throw new DatabaseConnectionException("Connection Failed:"+e.getMessage());
+        } catch (SQLException e) {
+            throw new DatabaseConnectionException("Connection Failed:" + e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class DbAccess {
      *
      * @return connection
      */
-    Connection getConnection(){
+    Connection getConnection() {
         return conn;
     }
 }

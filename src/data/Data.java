@@ -28,7 +28,7 @@ public class Data {
      * @throws ClassNotFoundException
      * @throws EmptySetException
      */
-    public Data(String tableName) throws SQLException, DatabaseConnectionException, ClassNotFoundException, EmptySetException {
+    public Data(String tableName) throws SQLException, DatabaseConnectionException, EmptySetException, DatabaseQueryException {
         DbAccess db = new DbAccess();
         db.initConnection();
         TableData td = new TableData(db);

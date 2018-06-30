@@ -2,6 +2,7 @@ package mining;
 
 import data.*;
 import database.DatabaseConnectionException;
+import database.DatabaseQueryException;
 import database.EmptySetException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -157,7 +158,7 @@ public class Cluster implements Serializable {
 		return clusterObj;
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException, EmptySetException, DatabaseConnectionException, OutOfRangeSampleSize {
+	public static void main(String[] args) throws SQLException, EmptySetException, DatabaseConnectionException, OutOfRangeSampleSize, DatabaseQueryException {
 		Data d = new Data("iris");
 
 		KMeansMiner km = new KMeansMiner(15);

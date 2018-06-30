@@ -1,16 +1,15 @@
 package database;
 
+import database.TableSchema.Column;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
-import database.TableSchema.Column;
 
 /**
  * Class that models and interrogate data table through its services.
@@ -21,123 +20,134 @@ import database.TableSchema.Column;
 
 public class TableData {
 
-	DbAccess db;
+    DbAccess db;
 
-	/**
-	 * Constructs an instance of the table data to be modeled.
-	 *
-	 * @param db access to DB
-	 */
-	public TableData(DbAccess db) {
-		this.db=db;
-	}
+    /**
+     * Constructs an instance of the table data to be modeled.
+     *
+     * @param db access to DB
+     */
+    public TableData(DbAccess db) {
+        this.db = db;
+    }
 
-	/**
-	 * Interrogates data table getting list of distinct values (no duplicate values).
-	 *
-	 * @param table name
-	 * @return list of results
-	 * @throws SQLException
-	 * @throws EmptySetException
-	 */
-	public List<Example> getDistinctTransactions(String table) throws SQLException, EmptySetException{
-		List<Example> exampleList = new ArrayList<>();
-		Connection conn = db.getConnection();
-		Statement stmt = conn.createStatement();
-		String sqlQuery = String.format("SELECT DISTINCT * FROM %s", table);
-		ResultSet result = stmt.executeQuery(sqlQuery);
-		TableSchema schema = new TableSchema(db, table);
-		if(!result.isBeforeFirst()){
-			throw new EmptySetException("No results for this query.");
-		}
+    /**
+     * Interrogates data table getting list of distinct values (no duplicate values).
+     *
+     * @param table name
+     * @return list of results
+     * @throws SQLException
+     * @throws EmptySetException
+     */
+    public List<Example> getDistinctTransactions(String table) throws EmptySetException, DatabaseQueryException {
+        List<Example> exampleList = new ArrayList<>();
+        Connection conn = db.getConnection();
 
-		while(result.next()){
-			Example ex = new Example();
-			for(int i=1; i<=schema.getNumberOfAttributes(); i++){
-				if(schema.getColumn(i-1).isNumber()){
-					ex.add(result.getDouble(i));
-				}else{
-					ex.add(result.getString(i));
-				}
-			}
-			exampleList.add(ex);
-		}
-		result.close();
-		stmt.close();
+        try (Statement stmt = conn.createStatement()) {
+            String sqlQuery = String.format("SELECT DISTINCT * FROM %s", table);
+            try (ResultSet result = stmt.executeQuery(sqlQuery)) {
 
-		return exampleList;
-	}
+                TableSchema schema = new TableSchema(db, table);
+                if (!result.isBeforeFirst()) {
+                    throw new EmptySetException("No results for this query.");
+                }
 
-	/**
-	 * Interrogates data table getting list of distinct values of a selected attribute, ordered by ascending mode.
-	 *
-	 * @param table name
-	 * @param column attribute
-	 * @return list of results
-	 * @throws SQLException
-	 */
-	public  Set<Object>getDistinctColumnValues(String table, Column column) throws SQLException{
-		Set<Object> attributeValues = new TreeSet<>();
+                while (result.next()) {
+                    Example ex = new Example();
+                    for (int i = 1; i <= schema.getNumberOfAttributes(); i++) {
+                        if (schema.getColumn(i - 1).isNumber()) {
+                            ex.add(result.getDouble(i));
+                        } else {
+                            ex.add(result.getString(i));
+                        }
+                    }
+                    exampleList.add(ex);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseQueryException(e.getMessage(), e);
+        }
 
-		Statement stmt = db.getConnection().createStatement();
-		String columnName = column.getColumnName();
-		String SQLQuery = String.format("SELECT DISTINCT %s FROM %s ORDER BY %s ASC", columnName, table, columnName);
-		ResultSet res = stmt.executeQuery(SQLQuery);
+        return exampleList;
+    }
 
-		if (column.isNumber()){
-			while(res.next()){
-				attributeValues.add(res.getDouble(columnName));
-			}
-		}else {
-			while(res.next()){
-				attributeValues.add(res.getString(columnName));
-			}
-		}
-		res.close();
-		stmt.close();
+    /**
+     * Interrogates data table getting list of distinct values of a selected attribute, ordered by ascending mode.
+     *
+     * @param table  name
+     * @param column attribute
+     * @return list of results
+     * @throws SQLException
+     */
+    public Set<Object> getDistinctColumnValues(String table, Column column) throws DatabaseQueryException {
+        Set<Object> attributeValues = new TreeSet<>();
 
-		return  attributeValues;
+        try (Statement stmt = db.getConnection().createStatement()) {
+
+            String columnName = column.getColumnName();
+            String SQLQuery = String.format("SELECT DISTINCT %s FROM %s ORDER BY %s ASC", columnName, table, columnName);
+
+            try (ResultSet res = stmt.executeQuery(SQLQuery)) {
+                if (column.isNumber()) {
+                    while (res.next()) {
+                        attributeValues.add(res.getDouble(columnName));
+                    }
+                } else {
+                    while (res.next()) {
+                        attributeValues.add(res.getString(columnName));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseQueryException(e.getMessage(), e);
+        }
 
 
-	}
+        return attributeValues;
 
-	/**
-	 * Interrogates data table getting value obtained from chosen operations on a selected attribute.
-	 *
-	 * @param table name
-	 * @param column attribute
-	 * @param aggregate choose type of operation (min/max)
-	 * @return
-	 * @throws SQLException
-	 */
-	public  Object getAggregateColumnValue(String table,Column column,QUERY_TYPE aggregate) throws SQLException {
-		Statement stmt = db.getConnection().createStatement();
-		String columnName = column.getColumnName();
-		String SQLQueryMin = String.format("SELECT MIN(%s) AS %s FROM %s",columnName, columnName, table);
-		String SQLQueryMax = String.format("SELECT MAX(%s) AS %s FROM %s",columnName, columnName, table);
-		ResultSet res = null;
 
-		if(aggregate==QUERY_TYPE.MIN)
-			res = stmt.executeQuery(SQLQueryMin);
-		else if(aggregate==QUERY_TYPE.MAX)
-			res = stmt.executeQuery(SQLQueryMax);
+    }
 
-		res.next();
+    /**
+     * Interrogates data table getting value obtained from chosen operations on a selected attribute.
+     *
+     * @param table     name
+     * @param column    attribute
+     * @param aggregate choose type of operation (min/max)
+     * @return
+     * @throws SQLException
+     */
+    public Object getAggregateColumnValue(String table, Column column, QUERY_TYPE aggregate) throws SQLException {
 
-		Double resDouble = 0.0;
-		String resString = "";
+        try(Statement stmt = db.getConnection().createStatement()){
 
-		if(column.isNumber()) {
-			resDouble = res.getDouble(columnName);
-		}else
-			resString = res.getString(columnName);
+            String columnName = column.getColumnName();
+            String SQLQueryMin = String.format("SELECT MIN(%s) AS %s FROM %s", columnName, columnName, table);
+            String SQLQueryMax = String.format("SELECT MAX(%s) AS %s FROM %s", columnName, columnName, table);
+            ResultSet res = null;
 
-		res.close();
-		stmt.close();
+            if (aggregate == QUERY_TYPE.MIN)
+                res = stmt.executeQuery(SQLQueryMin);
+            else if (aggregate == QUERY_TYPE.MAX)
+                res = stmt.executeQuery(SQLQueryMax);
 
-		if(column.isNumber()) {
-			return resDouble;
-		}else
-			return resString;
-	}
+            res.next();
+
+            Double resDouble = 0.0;
+            String resString = "";
+
+            if (column.isNumber()) {
+                resDouble = res.getDouble(columnName);
+            } else
+                resString = res.getString(columnName);
+
+            res.close();
+            stmt.close();
+
+            if (column.isNumber()) {
+                return resDouble;
+            } else
+                return resString;
+        }
+    }
 }
