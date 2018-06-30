@@ -90,11 +90,16 @@ public class Cluster implements Serializable {
 	}
 	
 	public String toString(){
-		String str="Centroid=(";
-		for(int i=0;i<centroid.getLength();i++)
-			str+=centroid.get(i)+", ";
-		str+=")";
-		return str;
+
+		StringBuilder str = new StringBuilder("Centroid=(");
+
+		for(int i=0;i<centroid.getLength();i++){
+			str.append(centroid.get(i));
+			str.append(", ");
+		}
+		str.append(")");
+
+		return str.toString();
 	}
 	
 

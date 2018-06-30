@@ -1,5 +1,7 @@
 package database;
 
+import com.sun.xml.internal.bind.v2.runtime.property.StructureLoaderBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,18 +38,23 @@ public class Example implements Comparable<Example>{
 		
 		int i=0;
 		for(Object o:ex.example){
-			if(!o.equals(this.example.get(i)))
+			if(!o.equals(this.example.get(i))) {
 				return ((Comparable)o).compareTo(example.get(i));
+			}
 			i++;
 		}
 		return 0;
 	}
 
 	public String toString(){
-		String str="";
-		for(Object o:example)
-			str+=o.toString()+ " ";
-		return str;
+		StringBuilder str = new StringBuilder();
+
+		for(Object o:example){
+
+			str.append(o.toString());
+			str.append(" ");
+		}
+		return str.toString();
 	}
 	
 }

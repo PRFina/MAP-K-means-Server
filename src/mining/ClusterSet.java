@@ -115,21 +115,29 @@ public class ClusterSet implements Serializable {
 	}
 
 	public String toString() {
-		String out = "";
+		StringBuilder out = new StringBuilder();
+
 		for (int i = 0; i < C.length; i++) {
-			out += i + ":" + C[i].toString() + System.lineSeparator();
+			out.append(i);
+			out.append(":");
+			out.append(C[i].toString());
+			out.append(System.lineSeparator());
 		}
-		return out;
+
+		return out.toString();
 	}
 	
 	public String toString(Data data) {
-		String out="";
-		for(int i = 0; i < C.length; i++){
-			if (C[i]!=null){
-				out += i + ":" + C[i].toString(data) + System.lineSeparator();
-			}
+		StringBuilder out = new StringBuilder();
+
+		for (int i = 0; i < C.length; i++) {
+			out.append(i);
+			out.append(":");
+			out.append(C[i].toString(data));
+			out.append(System.lineSeparator());
 		}
-		return out;
+
+		return out.toString();
 	}
 
 	 JSONArray toJson(Data data){

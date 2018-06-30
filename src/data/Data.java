@@ -189,25 +189,32 @@ public class Data {
 
 
     public String toString() {
-        String out = "";
+        StringBuilder out = new StringBuilder();
+
         //concatenate table header
         for (Attribute attr : explanatorySet) {
-            out += attr.getName() + ",";
-        }
-        //concatenate table data
-        out += "\n";
-        for (int i = 0; i < this.numberOfExamples; i++) {
-            out += (i) + ": ";
-            for (int j = 0; j < this.getNumberOfAttributes(); j++) {
-                if (j == this.getNumberOfAttributes() - 1)
-                    out += this.getAttributeValue(i, j);
-                else
-                    out += this.getAttributeValue(i, j) + ",";
-            }
-            out += "\n";
+            out.append( attr.getName());
+            out.append(",");
         }
 
-        return out;
+        //concatenate table data
+        out.append(System.lineSeparator());
+        for (int i = 0; i < this.numberOfExamples; i++) {
+            out.append(i);
+            out.append(": ");
+            for (int j = 0; j < this.getNumberOfAttributes(); j++) {
+                if (j == this.getNumberOfAttributes() - 1){
+                    out.append( this.getAttributeValue(i, j));
+                } else {
+
+                    out.append(this.getAttributeValue(i, j));
+                    out.append(",");
+                }
+            }
+            out.append(System.lineSeparator());
+        }
+
+        return out.toString();
 
     }
 
