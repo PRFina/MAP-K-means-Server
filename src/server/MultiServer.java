@@ -22,7 +22,7 @@ import java.net.Socket;
  * @author Pio Raffaele Fina
  */
 
-public class MultiServer {
+public final class MultiServer {
     private static ServerConfiguration config;
     private int serverPort;
     private ServiceDispatcher dispatcher;
@@ -31,7 +31,7 @@ public class MultiServer {
     public MultiServer() throws ServerException {
 
         System.out.print("Init: configuration file... ");
-        config = new ServerConfiguration("config.properties");
+        config = ServerConfiguration.getInstance();
         System.out.println("done!");
 
         System.out.print("Init: storage folder... ");
@@ -57,7 +57,7 @@ public class MultiServer {
      * @return a ServerConfiguration object
      */
     public static ServerConfiguration getConfig() {
-            return config;
+        return config;
     }
 
     /**

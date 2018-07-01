@@ -1,5 +1,7 @@
 package server;
 
+import com.sun.security.ntlm.Server;
+
 import java.io.*;
 import java.util.Properties;
 
@@ -10,13 +12,16 @@ import java.util.Properties;
  * load the default one deployed in the jar
  *
  * the custom.property file must be located in working directory
+ *
+ * this class use Singleton pattern
  */
-public class ServerConfiguration {
+public final class ServerConfiguration {
 
     private Properties config;
     private String configFileName;
+    private static ServerConfiguration instance;
 
-    ServerConfiguration(String fileName) throws ServerException{
+    private ServerConfiguration(String fileName) throws ServerException{
         configFileName = fileName;
 
         //Try to load custom config file
@@ -38,6 +43,15 @@ public class ServerConfiguration {
             e.printStackTrace();
         }
     }
+
+    static ServerConfiguration getInstance() throws ServerException {
+        if (instance == null){
+            instance = new ServerConfiguration("config.properties");
+        }
+
+        return instance;
+    }
+
 
     public String getProperty(String key) {
         return config.getProperty(key);

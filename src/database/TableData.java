@@ -65,7 +65,7 @@ public class TableData {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseQueryException(e.getMessage(), e);
+            throw new DatabaseQueryException("Can't process the request, the resource doesn't exists!", e);
         }
 
         return exampleList;
@@ -99,7 +99,7 @@ public class TableData {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseQueryException(e.getMessage(), e);
+            throw new DatabaseQueryException("Can't process the request, the resource doesn't exists!", e);
         }
 
 
