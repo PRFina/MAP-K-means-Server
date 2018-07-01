@@ -10,7 +10,9 @@ L'architettura del server si articola nelle seguenti componenti:
 
 * Server Configuration: componente per la gestione della configurazione del server.
 
-Il server core è il risultato delle varie esercitazioni tenutesi in laboratorio, le altre componenti (*da non ritenersi come estensioni del progetto*) implementano design patterns e best practice per un implementazione del sistema solida ed estendibile
+Il server core è il risultato delle varie esercitazioni tenutesi in laboratorio, le altre componenti (*da non ritenersi come estensioni del progetto*) implementano design patterns e best practice per un implementazione del sistema solida ed estendibile.
+
+Dove possibile, si è scelto di usare uno stile dichiarativo attraverso l'utlizzo di file .xml (es. services.xml) ed evitare qualsiasi "hardcoded value".
 
 
 ## Deploy guide
