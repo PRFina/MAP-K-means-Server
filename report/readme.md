@@ -29,3 +29,6 @@ Nello specifico, nel file jar risiede il file _config.properties_ dove sono dich
 ![](img/deploy.png)
 
 In questo modo il server provvederà nella fase di avvio a caricare prima il "file custom" (se presente), altrimenti caricherà il "file di default"  presente nel jar.
+
+## Quality Assurance
+Il codice è stato sottoposto ad un processo di code review e sono stati utilizzati *static code analysis tools* come *findbugs* e *checkstyle* per assicurarsi la conformità ad un codice di qualità.

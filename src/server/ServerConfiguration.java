@@ -6,14 +6,7 @@ import java.io.*;
 import java.util.Properties;
 
 /**
- * Load server configuration file.
- *
- * load try to load a custom config.property file if fail
- * load the default one deployed in the jar
- *
- * the custom.property file must be located in working directory
- *
- * this class use Singleton pattern
+ * Load a configuration file which contains server settings.
  */
 public final class ServerConfiguration {
 
@@ -21,6 +14,17 @@ public final class ServerConfiguration {
     private String configFileName;
     private static ServerConfiguration instance;
 
+    /**
+     * Construct a new instance with the specified .properties file.
+     *
+     * <p>
+     *     The loading mechanism looks for a custom .property file to load in the
+     * current working directory, if no custom file is provided
+     * the default one distributed in the .jar archive will be loaded
+     * </p>
+     *
+     * @param fileName the name of the configuration file.
+     */
     private ServerConfiguration(String fileName) throws ServerException{
         configFileName = fileName;
 
