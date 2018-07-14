@@ -16,7 +16,8 @@ public class Tuple implements Serializable {
 
 	/**
 	 * Construct an instance of tuple.
-	 * @param size
+	 *
+	 * @param size int number that represents array size
 	 */
 	Tuple(int size){
 		tuple = new Item[size];
@@ -34,8 +35,8 @@ public class Tuple implements Serializable {
 	/**
 	 * Getter of the i-th element of tuple.
 	 *
-	 * @param i
-	 * @return i-th element of tuple
+     * @param i int number, index of array
+     * @return i-th element of tuple
 	 */
 	public Item get(int i) {
 		return tuple[i];
@@ -44,7 +45,7 @@ public class Tuple implements Serializable {
 	/**
 	 * Add a specified item in specified position of array
 	 * @param c item
-	 * @param i position
+	 * @param i int number, index of array
 	 */
 	void add(Item c, int i) {
 		// if (i < this.getLength())
@@ -54,7 +55,7 @@ public class Tuple implements Serializable {
     /**
      * Calculate distance between two tuples by sum of element-to-element distance
 	 *
-     * @param obj
+     * @param obj tuple from which calculate the distance
      * @return distance between two tuples
      */
 	public double getDistance(Tuple obj) {
@@ -69,9 +70,9 @@ public class Tuple implements Serializable {
 	/**
 	 * Calculate average distance between transactions indexed in clusteredData set
 	 *
-	 * @param data
-	 * @param clusteredData
-	 * @return average distance
+     * @param data table
+     * @param clusteredData set of tuples in
+     * @return average distance
 	 */
 	public double avgDistance(Data data, Set<Integer> clusteredData) {
 		double sum = 0.0, avg = 0.0;

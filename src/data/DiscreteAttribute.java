@@ -45,7 +45,7 @@ public class DiscreteAttribute extends Attribute implements Iterable<String> {
 	 * @param data represents a tabular view of transactions
 	 * @param idList list of tuples indexes
 	 * @param v the value of which the occurrences are to be looked for
-	 * @return
+	 * @return the number of occurrences
 	 */
 	int frequency(Data data, Set<Integer> idList, String v) {
 		int freqCount = 0;

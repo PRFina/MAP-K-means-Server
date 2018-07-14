@@ -20,13 +20,13 @@ public class Data {
     private List<Attribute> explanatorySet;
 
     /**
-     * Construct an instance of Data table by calling the related database table.
+     * Constructs an instance of Data table by calling the related database table.
      *
      * @param tableName name of database table that will be builds
-     * @throws SQLException
-     * @throws DatabaseConnectionException
-     * @throws ClassNotFoundException
-     * @throws EmptySetException
+     * @throws SQLException in case of SQL error
+     * @throws DatabaseConnectionException in case of connection problems
+     * @throws EmptySetException in case of missing results in result set
+     * @throws DatabaseQueryException in case of missing resources
      */
     public Data(String tableName) throws SQLException, DatabaseConnectionException, EmptySetException, DatabaseQueryException {
         DbAccess db = new DbAccess();
@@ -108,12 +108,10 @@ public class Data {
     /**
      * Getter of the tuple by index
      *
-     * @param index
+     * @param index the item index
      * @return tuple looked for
      */
     public Tuple getItemSet(int index) {
-        //TODO uniformare  i costruttori di cont e discr attribute per eliminare i cast
-
         Tuple tuple = new Tuple(explanatorySet.size());
         for (int i = 0; i < explanatorySet.size(); i++) {
             Attribute currAttr = explanatorySet.get(i);
@@ -133,7 +131,7 @@ public class Data {
     /**
      * Generate array of k unique random indexes for centroids
      *
-     * @param k
+     * @param k random int number
      * @return array of indexes
      */
     public int[] sampling(int k) throws OutOfRangeSampleSize {
@@ -221,8 +219,8 @@ public class Data {
     /**
      * Dispatch type of attribute using RTTI
      *
-     * @param idList
-     * @param attribute
+     * @param idList subset of tuples represented by row index
+     * @param attribute a generic attribute
      * @return calls to compute prototype with right parameter
      */
     Object computePrototype(Set<Integer> idList, Attribute attribute) {
@@ -235,9 +233,9 @@ public class Data {
     /**
      * Return the most frequent Discrete attribute's value in tuples indexed by idList
      *
-     * @param idList
-     * @param attribute Discrete attribute
-     * @return
+     * @param idList subset of tuples represented by row index
+     * @param attribute discrete attribute
+     * @return the most frequent Discrete attribute's value in tuples indexed by idList
      */
     String computePrototype(Set<Integer> idList, DiscreteAttribute attribute) {
         Iterator<String> it = attribute.iterator();
@@ -261,9 +259,9 @@ public class Data {
     /**
      * Return the most frequent Continuous attribute's value in tuples indexed by idList
      *
-     * @param idList
-     * @param attribute Continuous attribute
-     * @return
+     * @param idList subset of tuples represented by row index
+     * @param attribute continuous attribute
+     * @return the most frequent Continuous attribute's value in tuples indexed by idList
      */
     Double computePrototype(Set<Integer> idList, ContinuousAttribute attribute) {
         Double sum = 0.0;

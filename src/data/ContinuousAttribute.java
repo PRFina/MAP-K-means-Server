@@ -1,4 +1,5 @@
 package data;
+
 /**
  * This class provide an implementation of a Continuous Attribute type (eg. weight, length, temperature values).
  *
@@ -24,6 +25,7 @@ class ContinuousAttribute extends Attribute {
 		this.min = min;
 		this.max = max;
 	}
+
 	/**
 	 * Normalize the value using min-max normalization
 	 *

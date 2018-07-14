@@ -18,20 +18,21 @@ import java.text.DecimalFormat;
 public class ContinuousItem extends Item {
 
     private static DecimalFormat df2 = new DecimalFormat("###,###.##"); // needed for string formatting
+
     /**
-     * Construct a continuous item.
+     * Constructs a continuous item.
      *
-     * @param attribute
-     * @param value
+     * @param attribute attribute name
+     * @param value attribute value
      */
     ContinuousItem(Attribute attribute, Double value) {
         super(attribute, value);
     }
 
     /**
-     * Calculate distance between two continuous attribute using absolute value.
+     * Calculates distance between two continuous attribute using absolute value.
      *
-     * @param a
+     * @param a object from which calculate the distance
      * @return absolute values between two double quantities
      */
     @Override

@@ -13,6 +13,7 @@ abstract class Attribute implements Serializable {
 
 	private String name;
 	private int index;
+
 	/**
 	 * Construct an instance of an attribute.
 	 * @param name attribute name
@@ -22,6 +23,7 @@ abstract class Attribute implements Serializable {
 		this.name = name;
 		this.index = index;
 	}
+
 	/**
 	 * Getter for the attribute name.
 	 * @return attribute name
@@ -29,6 +31,7 @@ abstract class Attribute implements Serializable {
 	String getName() {
 		return name;
 	}
+
 	/**
 	 * Getter for the attribute index.
 	 * @return index of the attribute

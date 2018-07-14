@@ -12,8 +12,8 @@ public class DiscreteItem extends Item {
 	/**
 	 * Construct an instance of a discrete item
 	 *
-	 * @param attribute
-	 * @param value
+	 * @param attribute discrete attribute
+	 * @param value attribute value
 	 */
 	DiscreteItem(DiscreteAttribute attribute, String value) {
 
@@ -23,7 +23,7 @@ public class DiscreteItem extends Item {
 	/**
 	 * Calculate distance between two objects assigning 0.0 in case of equals objects or 1.0 otherwise
 	 *
-	 * @param a
+	 * @param a object from which calculate the distance
 	 * @return distance between two discrete objects
 	 */
 	double distance(Object a) {

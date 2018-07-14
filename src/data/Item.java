@@ -1,4 +1,5 @@
 package data;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -16,8 +17,8 @@ public abstract class Item implements Serializable {
 	/**
 	 * Construct an instance of an item
 	 *
-	 * @param attribute
-	 * @param value
+     * @param attribute a generic attribute
+     * @param value attribute value
 	 */
 	Item(Attribute attribute, Object value){
 		this.attribute = attribute;
@@ -36,7 +37,7 @@ public abstract class Item implements Serializable {
 	/**
 	 * Setter for the attribute field
 	 *
-	 * @param attribute
+     * @param attribute a generic attribute
 	 */
     void setAttribute(Attribute attribute) {
 		this.attribute = attribute;
@@ -54,7 +55,7 @@ public abstract class Item implements Serializable {
 	/**
 	 * Setter for the value field
 	 *
-	 * @param value
+     * @param value with which the attribute will be set
 	 */
 	void setValue(Object value) {
 		this.value = value;
@@ -68,8 +69,8 @@ public abstract class Item implements Serializable {
 	/**
 	 * Calculate distance between two objects
 	 *
-	 * @param a
-	 * @return distance between two objects
+     * @param a object from which calculate the distance
+     * @return distance between two objects
 	 */
 	abstract double distance(Object a);
 
