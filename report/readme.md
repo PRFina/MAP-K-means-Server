@@ -19,11 +19,10 @@ Il server core è il risultato delle varie esercitazioni tenutesi in laboratorio
 Dove possibile, si è scelto di usare uno stile dichiarativo attraverso l'utlizzo di file .xml (es. services.xml) ed evitare qualsiasi "hardcoded value".
 
 ### KMiner ecosystem
-(FORNIRE SCHEMA UML)
-* Kminer-Server
-* Kminer-client (Swing)
-* Kiminer-client (Android App)
-* Communication protocol
+Nel seguente diagramma vengono mostrate le principali componenti e come esse interagiscono tra loro.
+
+![](img/components_diagram.png)
+
 
 ## Deploy guide
 Il deployment del server avviene attraverso il file jar (specificare quale), Per l'esecuzione del jar è possibile:
