@@ -25,9 +25,9 @@ public class TableSchema {
     /**
      * Create an instance of TableSchema following the mapped types.
      *
-     * @param db        access
+     * @param db access
      * @param tableName name
-     * @throws SQLException
+     * @throws SQLException for generics SQL errors
      */
     public TableSchema(DbAccess db, String tableName) throws SQLException {
         this.db = db;
@@ -66,7 +66,7 @@ public class TableSchema {
     /**
      * Gets column by related index
      *
-     * @param index
+     * @param index int number that identifies column
      * @return column looked for
      */
     public Column getColumn(int index) {

@@ -36,8 +36,8 @@ public class TableData {
      *
      * @param table name
      * @return list of results
-     * @throws SQLException
-     * @throws EmptySetException
+     * @throws SQLException for generics SQL errors
+     * @throws EmptySetException if result set of queries is empty
      */
     public List<Example> getDistinctTransactions(String table) throws EmptySetException, DatabaseQueryException {
         List<Example> exampleList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class TableData {
      * @param table  name
      * @param column attribute
      * @return list of results
-     * @throws SQLException
+     * @throws SQLException for generics SQL errors
      */
     public Set<Object> getDistinctColumnValues(String table, Column column) throws DatabaseQueryException {
         Set<Object> attributeValues = new TreeSet<>();
@@ -111,11 +111,11 @@ public class TableData {
     /**
      * Interrogates data table getting value obtained from chosen operations on a selected attribute.
      *
-     * @param table     name
-     * @param column    attribute
+     * @param table name
+     * @param column attribute
      * @param aggregate choose type of operation (min/max)
-     * @return
-     * @throws SQLException
+     * @return result set
+     * @throws SQLException for generics SQL errors
      */
     public Object getAggregateColumnValue(String table, Column column, QUERY_TYPE aggregate) throws SQLException {
 

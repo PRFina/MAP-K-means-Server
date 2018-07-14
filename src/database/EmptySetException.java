@@ -1,7 +1,7 @@
 package database;
 
 /**
- * Exception to be thrown in case the results of queries is empty.
+ * Exception to be thrown if result set of queries is empty.
  */
 public class EmptySetException extends Exception {
     EmptySetException(String message) {

@@ -27,8 +27,7 @@ public class DbAccess {
     /**
      * Establishes connection to DB using url string that contains parameters like url and user credentials.
      *
-     * @throws DatabaseConnectionException
-     * @throws ClassNotFoundException
+     * @throws DatabaseConnectionException if DB can't be connected
      */
     public void initConnection() throws DatabaseConnectionException {
 
@@ -43,7 +42,7 @@ public class DbAccess {
     /**
      * Closes connection with DB.
      *
-     * @throws SQLException
+     * @throws SQLException for generics SQL errors
      */
     public void closeConnection() throws SQLException {
         conn.close();

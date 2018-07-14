@@ -1,7 +1,9 @@
 package data;
 
 /**
- * Exception to be thrown in case the number of cluster selected in out of range
+ * Exception to be thrown if the number of clusters selected is out of range:
+ * range min: minumum number of clusters, 1;
+ * range max: maximum number of clusters, corresponds to number of unique tuples in data table.
  *
  * @author Simone Cicerello
  * @version 1.0

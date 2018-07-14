@@ -1,7 +1,7 @@
 package database;
 
 /**
- * Exception to be thrown in case of problems with DB connection.
+ * Exception to be thrown if DB can't be connected.
  */
 public class DatabaseConnectionException extends Exception {
     DatabaseConnectionException(String message) {

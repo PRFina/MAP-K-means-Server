@@ -87,7 +87,7 @@ public class Data {
     /**
      * Getter of the attribute by index
      *
-     * @param index
+     * @param index the attribute index
      * @return attribute looked for
      */
     public Attribute getAttribute(int index) {
