@@ -90,9 +90,11 @@ public class ServiceDispatcher {
     /**
      * Parse the .xml file specified as parameter and register
      * the services declared in it.
-     * Each service declared is loaded and instatiated with reflection
+     * Each service declared is loaded and instantiated with reflection
      * mechanism
      * @param fileName the name of the file to be parsed
+     *
+     * @throws ServerException if some errors occurs while parse services.xml file
      */
     public void load(String fileName) throws ServerException {
         try(InputStream in = getClass().getClassLoader().getResourceAsStream(fileName)){

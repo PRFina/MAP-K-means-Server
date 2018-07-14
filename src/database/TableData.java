@@ -36,8 +36,9 @@ public class TableData {
      *
      * @param table name
      * @return list of results
-     * @throws SQLException for generics SQL errors
+     *
      * @throws EmptySetException if result set of queries is empty
+     * @throws DatabaseQueryException if SQL query can't be executed
      */
     public List<Example> getDistinctTransactions(String table) throws EmptySetException, DatabaseQueryException {
         List<Example> exampleList = new ArrayList<>();
@@ -77,7 +78,7 @@ public class TableData {
      * @param table  name
      * @param column attribute
      * @return list of results
-     * @throws SQLException for generics SQL errors
+     * @throws DatabaseQueryException if SQL query can't be executed
      */
     public Set<Object> getDistinctColumnValues(String table, Column column) throws DatabaseQueryException {
         Set<Object> attributeValues = new TreeSet<>();

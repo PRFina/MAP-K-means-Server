@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * This class, furthermore, allow to serialize on a file an instance of Mining.
  *
  * @author Simone Cicerello
- * @verison 1.0
+ * @version 1.0
  *
  */
 public class KMeansMiner implements Serializable {

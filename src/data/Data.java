@@ -133,6 +133,8 @@ public class Data {
      *
      * @param k random int number
      * @return array of indexes
+     *
+     * @throws OutOfRangeSampleSize if k is out-of-range
      */
     public int[] sampling(int k) throws OutOfRangeSampleSize {
         if (k <= 0 || k > this.getNumberOfExamples()) {
