@@ -1,4 +1,5 @@
 package mining;
+
 import data.Data;
 import data.OutOfRangeSampleSize;
 import data.Tuple;
@@ -56,8 +57,8 @@ public class ClusterSet implements Serializable {
 	/**
 	 * Constructs the first set of centroids, using random function.
 	 *
-	 * @param data talbe
-	 * @throws OutOfRangeSampleSize
+	 * @param data table
+	 * @throws OutOfRangeSampleSize if the number of clusters selected is out of range
 	 */
 	void initializeCentroids(Data data) throws OutOfRangeSampleSize {
 		int centroidIndexes[]=data.sampling(C.length);
@@ -91,8 +92,8 @@ public class ClusterSet implements Serializable {
 	/**
 	 * Represents cluster to be used in other operations like "current".
 	 *
-	 * @param id
-	 * @return null
+     * @param id int number that represents the index of current cluster
+     * @return null
 	 */
 	Cluster currentCluster(int id) {
 		for (int i = 0; i < C.length; i++) {
@@ -140,7 +141,13 @@ public class ClusterSet implements Serializable {
 		return out.toString();
 	}
 
-	 JSONArray toJson(Data data){
+    /**
+     * Serialize an instance of ClusterSet
+     *
+     * @param data table
+     * @return JSON object
+     */
+    JSONArray toJson(Data data){
 		JSONArray clusters = new JSONArray();
 
 		for(int i = 0; i < C.length; i++){

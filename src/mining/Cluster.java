@@ -27,7 +27,7 @@ public class Cluster implements Serializable {
 	/**
 	 * Constructs an instance of cluster.
 	 *
-	 * @param centroid
+	 * @param centroid of cluster
 	 */
 	Cluster(Tuple centroid){
 		this.centroid=centroid;
@@ -64,8 +64,6 @@ public class Cluster implements Serializable {
 		return clusteredData.add(id);
 		
 	}
-	
-	//verifica se una transazione � clusterizzata nell'array corrente
 
 	/**
 	 * Check if a tuple is contained in current clusteredData, through its id.
@@ -76,9 +74,6 @@ public class Cluster implements Serializable {
 	boolean contain(int id){
 		return clusteredData.contains(id);
 	}
-	
-
-	//remove the tuple that has changed the cluster
 
 	/**
 	 * Remove tuple that has changed in clusteredData, indicated by the id.
@@ -104,7 +99,6 @@ public class Cluster implements Serializable {
 	}
 	
 
-	
 	public String toString(Data data){
 
 		StringBuilder out = new StringBuilder("Centroid = ");
@@ -121,6 +115,12 @@ public class Cluster implements Serializable {
 		return out.toString();
 	}
 
+	/**
+	 * Serializes a Cluster instance in JSON object.
+	 *
+	 * @param data table
+	 * @return JSon object
+	 */
 	JSONObject toJson(Data data){
 		JSONObject clusterObj = new JSONObject();
 
@@ -156,14 +156,5 @@ public class Cluster implements Serializable {
 
 
 		return clusterObj;
-	}
-
-	public static void main(String[] args) throws SQLException, EmptySetException, DatabaseConnectionException, OutOfRangeSampleSize, DatabaseQueryException {
-		Data d = new Data("iris");
-
-		KMeansMiner km = new KMeansMiner(15);
-		km.kmeans(d);
-		System.out.println(km.toString(d));
-		System.out.println(km.toJson(d));
 	}
 }

@@ -36,8 +36,8 @@ public class KMeansMiner implements Serializable {
 	 * Constructs an instance of the KMeans miner, loading from previously serialized file.
 	 *
 	 * @param fileName file name that contains a serialized instance of KMeans
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * @throws IOException if input/output errors occurs
+	 * @throws ClassNotFoundException if .class is not found
 	 */
 	public KMeansMiner(String fileName) throws IOException, ClassNotFoundException {
 		FileInputStream inStream = new FileInputStream(fileName);
@@ -64,10 +64,11 @@ public class KMeansMiner implements Serializable {
 	 *
 	 * @param data table
 	 * @return number of iterations
-	 * @throws OutOfRangeSampleSize
+	 * @throws OutOfRangeSampleSize if the number of clusters selected is out of range
 	 */
 	public int kmeans(Data data) throws OutOfRangeSampleSize {
 		int numberOfIterations=0;
+
 		//STEP 1
 		C.initializeCentroids(data);
 		boolean changedCluster=false;
@@ -102,8 +103,8 @@ public class KMeansMiner implements Serializable {
 	/**
 	 * Serialize and save an instance of KMeans in a file.
 	 *
-	 * @param fileName
-	 * @throws IOException
+	 * @param fileName that contains serialized instance of KMeans
+	 * @throws IOException if input/output errors occurs
 	 */
 	public void salva(String fileName) throws IOException {
 		// REVIEW vedere come usare il try-with-resources
@@ -120,6 +121,12 @@ public class KMeansMiner implements Serializable {
 		return C.toString(data);
 	}
 
+    /**
+     * Serialize an instance of KMeansMiner in JSON object
+     *
+     * @param data table
+     * @return JSON object
+     */
 	public String toJson(Data data){
 		JSONArray tableHeader = new JSONArray();
 		for (int i = 0; i < data.getNumberOfAttributes() ; i++) {
