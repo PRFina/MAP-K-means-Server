@@ -34,32 +34,59 @@ import java.util.Map;
  */
 public class ResponseMessage implements Serializable {
     private MessageType type;
-
     private String status;
-
     private Map<String,String> body;
-    public ResponseMessage(){
 
+    /**
+     * Constructs an instance of responseMessage
+     */
+    public ResponseMessage(){
         body = new HashMap<>();
     }
 
+    /**
+     * Setter of message type
+     *
+     * @param type to set in message
+     */
     public void setResponseType(MessageType type){
         this.type = type;
     }
 
+    /**
+     * Setter of message status
+     *
+     * @param status to set in message
+     */
     public void setStatus(String status){
         this.status = status;
     }
 
-
+    /**
+     * Getter of message status
+     *
+     * @return the status
+     */
     public String getStatus() {
         return status;
     }
 
+    /**
+     * Adds body field in hash map
+     *
+     * @param key attribute
+     * @param value field value
+     */
     public void addBodyField(String key, String value){
         body.put(key,value);
     }
 
+    /**
+     * Getter of body field
+     *
+     * @param key field attribute
+     * @return the selected field
+     */
     public String getBodyField(String key) {
         return body.get(key);
     }

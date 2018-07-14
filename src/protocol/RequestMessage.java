@@ -29,17 +29,39 @@ public class RequestMessage implements Serializable {
     private MessageType type;
     private Map<String,String> body;
 
+    /**
+     * Constructs an instance of requestMessage
+     *
+     * @param msgType type of message
+     */
     public RequestMessage(MessageType msgType) {
         this.type = msgType;
         body = new HashMap<>();
     }
 
+    /**
+     * Getter of requestMessage type
+     *
+     * @return the type of requestMessage
+     */
     public MessageType getRequestType(){return type;}
 
+    /**
+     * Adds body field in hash map
+     *
+     * @param key attribute
+     * @param value field value
+     */
     public void addBodyField(String key, String value){
         body.put(key,value);
     }
 
+    /**
+     * Getter of body field
+     *
+     * @param fieldKey field attribute
+     * @return the selected field
+     */
     public String getBodyField(String fieldKey){
         return body.get(fieldKey);
     }
