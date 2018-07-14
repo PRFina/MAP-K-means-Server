@@ -75,6 +75,7 @@ public final class MultiServer {
         while (true) {
             Socket socket = srvSocket.accept();
             ServeOneClient client = new ServeOneClient(socket, dispatcher, logger);
+            client.start();
         }
     }
 

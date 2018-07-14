@@ -1,14 +1,10 @@
 package mining;
 
 import data.*;
-import database.DatabaseConnectionException;
-import database.DatabaseQueryException;
-import database.EmptySetException;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.Set;
 import java.util.HashSet;
 

@@ -29,9 +29,6 @@ public final class ServeOneClient extends Thread {
 
         this.dispatcher = dispatcher;
         this.logger = logger;
-
-        this.start();
-
     }
 
     @Override

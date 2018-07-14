@@ -1,16 +1,11 @@
 package mining;
 
 import data.Data;
-import data.Item;
 import data.OutOfRangeSampleSize;
-import data.Tuple;
-import database.DatabaseConnectionException;
-import database.EmptySetException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.io.*;
-import java.sql.SQLException;
+
 
 /**
  * Class that represents the action of "Mining" on a data table with KMeans algorithm, choosing number of clusters.
@@ -107,14 +102,14 @@ public class KMeansMiner implements Serializable {
 	 * @throws IOException if input/output errors occurs
 	 */
 	public void salva(String fileName) throws IOException {
-		// REVIEW vedere come usare il try-with-resources
-		FileOutputStream fileStream = new FileOutputStream(fileName);
-		ObjectOutputStream objStream = new ObjectOutputStream(fileStream);
 
-		objStream.writeObject(this.C);
+		try(FileOutputStream fileStream = new FileOutputStream(fileName);
+		ObjectOutputStream objStream = new ObjectOutputStream(fileStream)){
 
-		objStream.close();
-		fileStream.close();
+			objStream.writeObject(this.C);
+
+		}
+
 	}
 
 	public String toString(Data data){
