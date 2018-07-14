@@ -61,6 +61,11 @@ public final class ServerConfiguration {
         return config.getProperty(key);
     }
 
+    /**
+     * Creates storage folder
+     *
+     * @throws ServerException in case of server error
+     */
     void initStorageFolder() throws ServerException {
         File file = new File(config.getProperty("file_storage_root"));
 

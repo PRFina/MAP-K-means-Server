@@ -53,7 +53,6 @@ public final class ServeOneClient extends Thread {
 
                 System.out.println(req); // DEBUG
                 System.out.println(resp); // DEBUG
-
             }
 
         } catch (EOFException e) {
@@ -71,8 +70,6 @@ public final class ServeOneClient extends Thread {
             }
         }
 
-
-        //TODO replace with logger: disconnect
     }
 
 }

@@ -13,6 +13,11 @@ import java.util.logging.SimpleFormatter;
 public class ServerLogger {
     private Logger logger;
 
+    /**
+     * Constructs an instance of ServerLogger
+     *
+     * @throws ServerException if server errors occurs
+     */
     ServerLogger() throws ServerException{
         logger = Logger.getLogger(ServerLogger.class.getName());
 
@@ -27,12 +32,12 @@ public class ServerLogger {
             throw new ServerException("Server setup error: can't create the logger");
         }
     }
+
     void log(String msg){
         logger.info(msg);
     }
 
     void logConnection(Socket socket, RequestMessage request, ResponseMessage response){
-
         logger.info( String.format("Connected with: %s request: %s response: %s",socket.getInetAddress().getHostAddress(),
                 request.getRequestType().name(), response.getStatus()));
     }

@@ -1,5 +1,8 @@
 package server;
 
+/**
+ * Exception to be thrown if server errors occurs.
+ */
 public class ServerException extends Exception {
 
     public ServerException() {

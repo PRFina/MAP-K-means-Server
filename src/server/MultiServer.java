@@ -64,7 +64,7 @@ public final class MultiServer {
      * Start the server main activity.
      * Dispatch new thread to handle client connection.
      *
-     * @throws IOException
+     * @throws IOException if input/output errors occurs
      */
     void start() throws IOException {
         System.out.print("Init: network binding...");
